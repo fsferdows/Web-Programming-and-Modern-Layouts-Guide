@@ -22,32 +22,36 @@ export default function Navigation({ activeTab, setActiveTab, isZenMode, toggleZ
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs" id="main-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 gap-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3" id="brand-container">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-3.5 gap-4">
+          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-3.5" id="brand-container">
             <div className="flex items-center space-x-3">
-              <div className="bg-slate-900 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-amber-400" />
+              <div className="relative bg-slate-950 text-white p-2 rounded-xl shadow-xs border border-slate-800/80 flex items-center justify-center shrink-0 group">
+                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-indigo-500 ring-2 ring-white"></div>
+                <Boxes className="w-5 h-5 text-indigo-400 group-hover:rotate-6 transition-transform duration-200" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-bold text-slate-900 tracking-tight leading-none">
-                    Web Fundamentals & Layouts
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <h1 className="text-base sm:text-lg font-extrabold text-slate-950 tracking-tight leading-none">
+                    Web Academy
                   </h1>
+                  <span className="inline-flex items-center text-[9px] bg-slate-100 border border-slate-200 text-slate-700 font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
+                    v1.5
+                  </span>
                   {/* Dynamic Offline Status badge */}
                   {isOffline ? (
-                    <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-md font-mono uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-800 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
                       <WifiOff className="w-2.5 h-2.5 text-amber-600 animate-pulse" />
                       Offline Mode
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-md font-mono uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-100 text-emerald-800 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
                       <Wifi className="w-2.5 h-2.5 text-emerald-600" />
                       Offline Ready
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 font-mono mt-1">
-                  COMPREHENSIVE Q&A ACADEMY & LOCAL PLAYGROUND
+                <p className="text-[10px] text-slate-500 font-mono mt-1 uppercase tracking-wide">
+                  COMPREHENSIVE WEB ENGINEERING ACADEMY
                 </p>
               </div>
             </div>
