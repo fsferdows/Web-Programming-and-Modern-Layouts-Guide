@@ -6,7 +6,9 @@ import {
 } from "lucide-react";
 
 export default function QuizEngine() {
-  const [activeMode, setActiveMode] = useState<"quiz" | "flashcards">("quiz");
+  const [activeMode, setActiveMode] = useState<"quiz" | "flashcards">(() => {
+    return (localStorage.getItem("fundamentals_quiz_mode") as "quiz" | "flashcards") || "quiz";
+  });
 
   // Quiz state
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -15,6 +17,22 @@ export default function QuizEngine() {
   const [score, setScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
+  const [highScore, setHighScore] = useState<number>(() => {
+    return Number(localStorage.getItem("fundamentals_high_score") || "0");
+  });
+
+  const handleSetActiveMode = (mode: "quiz" | "flashcards") => {
+    setActiveMode(mode);
+    localStorage.setItem("fundamentals_quiz_mode", mode);
+  };
+
+  // Update high score on complete
+  React.useEffect(() => {
+    if (quizComplete && score > highScore) {
+      setHighScore(score);
+      localStorage.setItem("fundamentals_high_score", String(score));
+    }
+  }, [quizComplete, score, highScore]);
 
   // Flashcards state
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -82,27 +100,36 @@ export default function QuizEngine() {
           </p>
         </div>
 
-        <div className="flex gap-2">
-          <button
-            onClick={() => setActiveMode("quiz")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold font-mono uppercase tracking-wider cursor-pointer border transition-all ${
-              activeMode === "quiz"
-                ? "bg-slate-900 text-white border-slate-900"
-                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-            }`}
-          >
-            📋 Practice Exam
-          </button>
-          <button
-            onClick={() => setActiveMode("flashcards")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold font-mono uppercase tracking-wider cursor-pointer border transition-all ${
-              activeMode === "flashcards"
-                ? "bg-slate-900 text-white border-slate-900"
-                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-            }`}
-          >
-            ⚡ Flashcards
-          </button>
+        <div className="flex flex-wrap items-center gap-3">
+          {highScore > 0 && (
+            <div className="text-[11px] font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5" />
+              <span>High Score: {highScore}/12</span>
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleSetActiveMode("quiz")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold font-mono uppercase tracking-wider cursor-pointer border transition-all ${
+                activeMode === "quiz"
+                  ? "bg-slate-900 text-white border-slate-900"
+                  : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+              }`}
+            >
+              📋 Practice Exam
+            </button>
+            <button
+              onClick={() => handleSetActiveMode("flashcards")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold font-mono uppercase tracking-wider cursor-pointer border transition-all ${
+                activeMode === "flashcards"
+                  ? "bg-slate-900 text-white border-slate-900"
+                  : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+              }`}
+            >
+              ⚡ Flashcards
+            </button>
+          </div>
         </div>
       </div>
 

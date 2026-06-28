@@ -1,18 +1,117 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "./components/Navigation";
 import SectionViewer from "./components/SectionViewer";
 import CodePlayground from "./components/CodePlayground";
 import LayoutSandbox from "./components/LayoutSandbox";
 import QuizEngine from "./components/QuizEngine";
-import { BookOpen, Code2, Boxes, GraduationCap, Sparkles, CheckCircle2 } from "lucide-react";
+import { BookOpen, Code2, Boxes, GraduationCap, Sparkles, CheckCircle2, Eye, Wifi, WifiOff } from "lucide-react";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>("study");
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    return localStorage.getItem("fundamentals_active_tab") || "study";
+  });
+  const [isZenMode, setIsZenMode] = useState<boolean>(() => {
+    return localStorage.getItem("fundamentals_zen_mode") === "true";
+  });
+  const [isOffline, setIsOffline] = useState<boolean>(() => {
+    return typeof navigator !== "undefined" ? !navigator.onLine : false;
+  });
+
+  // Offline status listeners
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
+  const handleSetActiveTab = (tab: string) => {
+    setActiveTab(tab);
+    localStorage.setItem("fundamentals_active_tab", tab);
+  };
+
+  const handleToggleZenMode = () => {
+    const nextVal = !isZenMode;
+    setIsZenMode(nextVal);
+    localStorage.setItem("fundamentals_zen_mode", String(nextVal));
+  };
+
+  const navItems = [
+    { id: "study", label: "Study Guide", icon: BookOpen },
+    { id: "playground", label: "Playground", icon: Code2 },
+    { id: "lab", label: "Visual Lab", icon: Boxes },
+    { id: "quiz", label: "Quiz Practice", icon: GraduationCap },
+  ];
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans" id="app-container">
+      {/* Floating Zen Mode Capsule Dock */}
+      {isZenMode && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center bg-slate-950/95 backdrop-blur-md text-white px-4 py-2 rounded-full shadow-lg border border-slate-800 space-x-3 transition-all duration-300 animate-in fade-in slide-in-from-bottom-6" id="floating-zen-dock">
+          <div className="flex items-center space-x-1.5 border-r border-slate-800 pr-3 mr-1 text-[11px] font-mono font-bold text-amber-400">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Web Academy</span>
+          </div>
+          {/* Navigation Items */}
+          <div className="flex items-center space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleSetActiveTab(item.id)}
+                  title={item.label}
+                  className={`p-2 rounded-full transition-all relative group cursor-pointer ${
+                    isActive ? "bg-amber-400 text-slate-950" : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 px-2 py-1 bg-slate-950 border border-slate-800 text-[10px] font-semibold text-white rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none shadow-md">
+                    {item.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="h-4 w-px bg-slate-800"></div>
+          {/* Offline Status */}
+          <div className="flex items-center" title={isOffline ? "Offline Mode Active" : "Online & Synced Locally"}>
+            {isOffline ? (
+              <WifiOff className="w-4 h-4 text-rose-400 animate-pulse" />
+            ) : (
+              <Wifi className="w-4 h-4 text-emerald-400" />
+            )}
+          </div>
+          <div className="h-4 w-px bg-slate-800"></div>
+          {/* Show Header */}
+          <button
+            onClick={handleToggleZenMode}
+            title="Restore Full Header"
+            className="p-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-full transition-all cursor-pointer group relative"
+          >
+            <Eye className="w-4 h-4" />
+            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 px-2 py-1 bg-slate-950 border border-slate-800 text-[10px] font-semibold text-white rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none shadow-md">
+              Show Header
+            </span>
+          </button>
+        </div>
+      )}
+
       {/* Sleek Header & Tab Navigation */}
-      <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Navigation
+        activeTab={activeTab}
+        setActiveTab={handleSetActiveTab}
+        isZenMode={isZenMode}
+        toggleZenMode={handleToggleZenMode}
+        isOffline={isOffline}
+      />
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content-flow">

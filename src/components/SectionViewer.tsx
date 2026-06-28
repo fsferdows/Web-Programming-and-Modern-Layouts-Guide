@@ -52,14 +52,14 @@ export default function SectionViewer() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-6" id="section-viewer-root">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 py-4" id="section-viewer-root">
       {/* Sidebar Navigation */}
       <div className="lg:col-span-4 space-y-4" id="section-sidebar">
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase font-mono tracking-wider mb-3">
+        <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
+          <h2 className="text-xs font-semibold text-slate-500 uppercase font-mono tracking-wider mb-2.5">
             Core Curriculum Sections
           </h2>
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-1 lg:flex lg:flex-col gap-2">
             {CURRICULUM_SECTIONS.map((section) => {
               const isSelected = selectedSection === section.id;
               return (
@@ -67,24 +67,24 @@ export default function SectionViewer() {
                   key={section.id}
                   id={`select-sec-${section.id}`}
                   onClick={() => setSelectedSection(section.id)}
-                  className={`w-full text-left p-3.5 rounded-xl transition-all duration-200 border cursor-pointer ${
+                  className={`w-full text-left p-2.5 sm:p-3 rounded-xl transition-all duration-200 border cursor-pointer ${
                     isSelected
-                      ? "bg-white border-slate-900 shadow-sm text-slate-950 font-medium"
-                      : "bg-transparent border-transparent hover:bg-white hover:border-slate-200 text-slate-600"
+                      ? "bg-white border-slate-950 shadow-xs text-slate-950 font-medium"
+                      : "bg-transparent border-transparent hover:bg-white hover:border-slate-200 text-slate-650"
                   }`}
                 >
-                  <div className="flex items-start space-x-3">
-                    <span className={`p-2 rounded-lg ${isSelected ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600"}`}>
+                  <div className="flex items-center lg:items-start space-x-2.5 sm:space-x-3">
+                    <span className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${isSelected ? "bg-slate-950 text-white" : "bg-slate-100 text-slate-600"}`}>
                       {getSectionIcon(section.icon)}
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-400 font-mono">
+                        <span className="text-[10px] font-semibold text-slate-400 font-mono">
                           0{section.number}
                         </span>
                       </div>
-                      <h3 className="text-sm font-semibold truncate mt-0.5">{section.title}</h3>
-                      <p className="text-xs text-slate-400 line-clamp-1 mt-1 font-sans">{section.description}</p>
+                      <h3 className="text-xs sm:text-sm font-semibold truncate mt-0.5">{section.shortTitle}</h3>
+                      <p className="text-[10px] text-slate-405 line-clamp-1 mt-0.5 font-sans hidden lg:block">{section.description}</p>
                     </div>
                   </div>
                 </button>
@@ -93,14 +93,14 @@ export default function SectionViewer() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-4 rounded-xl">
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-4 rounded-xl hidden lg:block">
           <div className="flex items-start space-x-3">
             <Sparkles className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
             <div>
               <h4 className="text-xs font-bold text-amber-900 uppercase font-mono tracking-wider">
                 Pro Tip: Interactive Labs
               </h4>
-              <p className="text-xs text-amber-800 leading-relaxed mt-1">
+              <p className="text-xs text-amber-850 leading-relaxed mt-1">
                 Each curriculum panel below includes a <strong>live interactive simulator</strong> built directly around its corresponding web engineering theory. Experiment with parameters to visualize mechanics in real time!
               </p>
             </div>

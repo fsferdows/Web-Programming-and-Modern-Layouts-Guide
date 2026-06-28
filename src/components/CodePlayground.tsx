@@ -3,20 +3,43 @@ import { PLAYGROUND_PRESETS } from "../data/curriculum";
 import { RefreshCw, Play, Info, Check, Code2 } from "lucide-react";
 
 export default function CodePlayground() {
-  const [selectedPresetId, setSelectedPresetId] = useState(PLAYGROUND_PRESETS[0].id);
+  const [selectedPresetId, setSelectedPresetId] = useState(() => {
+    return localStorage.getItem("playground_selected_preset_id") || PLAYGROUND_PRESETS[0].id;
+  });
   
   const currentPreset = PLAYGROUND_PRESETS.find(p => p.id === selectedPresetId) || PLAYGROUND_PRESETS[0];
 
-  const [htmlCode, setHtmlCode] = useState(currentPreset.html);
-  const [cssCode, setCssCode] = useState(currentPreset.css);
+  const [htmlCode, setHtmlCode] = useState(() => {
+    return localStorage.getItem(`playground_html_${selectedPresetId}`) || currentPreset.html;
+  });
+  const [cssCode, setCssCode] = useState(() => {
+    return localStorage.getItem(`playground_css_${selectedPresetId}`) || currentPreset.css;
+  });
   const [activeEditorTab, setActiveEditorTab] = useState<"html" | "css">("html");
   const [copied, setCopied] = useState(false);
 
-  // Sync state with selected preset
+  // Keep track of preset selection in local storage
+  const handleSelectPreset = (id: string) => {
+    setSelectedPresetId(id);
+    localStorage.setItem("playground_selected_preset_id", id);
+  };
+
+  // Sync state with selected preset, honoring saved local changes
   useEffect(() => {
-    setHtmlCode(currentPreset.html);
-    setCssCode(currentPreset.css);
+    const savedHtml = localStorage.getItem(`playground_html_${selectedPresetId}`);
+    const savedCss = localStorage.getItem(`playground_css_${selectedPresetId}`);
+    setHtmlCode(savedHtml !== null ? savedHtml : currentPreset.html);
+    setCssCode(savedCss !== null ? savedCss : currentPreset.css);
   }, [selectedPresetId, currentPreset]);
+
+  // Persist code changes dynamically
+  useEffect(() => {
+    localStorage.setItem(`playground_html_${selectedPresetId}`, htmlCode);
+  }, [htmlCode, selectedPresetId]);
+
+  useEffect(() => {
+    localStorage.setItem(`playground_css_${selectedPresetId}`, cssCode);
+  }, [cssCode, selectedPresetId]);
 
   // Combined iframe srcDoc
   const srcDocValue = `
@@ -72,7 +95,7 @@ export default function CodePlayground() {
           <select
             id="preset-selector"
             value={selectedPresetId}
-            onChange={(e) => setSelectedPresetId(e.target.value)}
+            onChange={(e) => handleSelectPreset(e.target.value)}
             className="bg-slate-800 text-slate-100 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-700 outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
           >
             {PLAYGROUND_PRESETS.map((p) => (
