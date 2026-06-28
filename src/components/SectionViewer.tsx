@@ -122,64 +122,64 @@ export default function SectionViewer() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6" id="section-viewer-root">
         {/* Sidebar Navigation (Desktop only) */}
         <div className="hidden lg:block lg:col-span-4 space-y-4" id="section-sidebar">
-        <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase font-mono tracking-wider mb-2.5">
-            Core Curriculum Sections
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-1 lg:flex lg:flex-col gap-2">
-            {CURRICULUM_SECTIONS.map((section) => {
-              const isSelected = selectedSection === section.id;
-              return (
-                <button
-                  key={section.id}
-                  id={`select-sec-${section.id}`}
-                  onClick={() => setSelectedSection(section.id)}
-                  className={`w-full text-left p-2.5 sm:p-3 rounded-xl transition-all duration-200 border cursor-pointer ${
-                    isSelected
-                      ? "bg-white border-slate-950 shadow-xs text-slate-950 font-medium"
-                      : "bg-transparent border-transparent hover:bg-white hover:border-slate-200 text-slate-650"
-                  }`}
-                >
-                  <div className="flex items-center lg:items-start space-x-2.5 sm:space-x-3">
-                    <span className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${isSelected ? "bg-slate-950 text-white" : "bg-slate-100 text-slate-600"}`}>
-                      {getSectionIcon(section.icon)}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-semibold text-slate-400 font-mono">
-                          0{section.number}
-                        </span>
-                        {completedList.includes(section.id) && (
-                          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-650 bg-emerald-50 px-1.5 py-0.5 rounded font-mono uppercase tracking-wide">
-                            <Check className="w-2.5 h-2.5 text-emerald-600" />
-                            Done
+          <div className="bg-slate-50 dark:bg-slate-900/60 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase font-mono tracking-wider mb-2.5">
+              Core Curriculum Sections
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-1 lg:flex lg:flex-col gap-2">
+              {CURRICULUM_SECTIONS.map((section) => {
+                const isSelected = selectedSection === section.id;
+                return (
+                  <button
+                    key={section.id}
+                    id={`select-sec-${section.id}`}
+                    onClick={() => setSelectedSection(section.id)}
+                    className={`w-full text-left p-2.5 sm:p-3 rounded-xl transition-all duration-200 border cursor-pointer ${
+                      isSelected
+                        ? "bg-white dark:bg-slate-800 border-slate-950 dark:border-slate-200 shadow-xs text-slate-950 dark:text-white font-medium"
+                        : "bg-transparent border-transparent hover:bg-white dark:hover:bg-slate-850 hover:border-slate-200 dark:hover:border-slate-800 text-slate-655 dark:text-slate-400"
+                    }`}
+                  >
+                    <div className="flex items-center lg:items-start space-x-2.5 sm:space-x-3">
+                      <span className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${isSelected ? "bg-slate-950 dark:bg-slate-100 text-white dark:text-slate-950" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}>
+                        {getSectionIcon(section.icon)}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 font-mono">
+                            0{section.number}
                           </span>
-                        )}
+                          {completedList.includes(section.id) && (
+                            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-650 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded font-mono uppercase tracking-wide">
+                              <Check className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-455" />
+                              Done
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-xs sm:text-sm font-semibold truncate mt-0.5">{section.shortTitle}</h3>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 line-clamp-1 mt-0.5 font-sans hidden lg:block">{section.description}</p>
                       </div>
-                      <h3 className="text-xs sm:text-sm font-semibold truncate mt-0.5">{section.shortTitle}</h3>
-                      <p className="text-[10px] text-slate-405 line-clamp-1 mt-0.5 font-sans hidden lg:block">{section.description}</p>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 p-4 rounded-xl hidden lg:block">
-          <div className="flex items-start space-x-3">
-            <Sparkles className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
-            <div>
-              <h4 className="text-xs font-bold text-amber-900 uppercase font-mono tracking-wider">
-                Pro Tip: Interactive Labs
-              </h4>
-              <p className="text-xs text-amber-850 leading-relaxed mt-1">
-                Each curriculum panel below includes a <strong>live interactive simulator</strong> built directly around its corresponding web engineering theory. Experiment with parameters to visualize mechanics in real time!
-              </p>
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/10 border border-amber-100 dark:border-amber-900/40 p-4 rounded-xl hidden lg:block">
+            <div className="flex items-start space-x-3">
+              <Sparkles className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="text-xs font-bold text-amber-900 dark:text-amber-400 uppercase font-mono tracking-wider">
+                  Pro Tip: Interactive Labs
+                </h4>
+                <p className="text-xs text-amber-850 dark:text-amber-300 leading-relaxed mt-1 font-sans">
+                  Each curriculum panel below includes a <strong>live interactive simulator</strong> built directly around its corresponding web engineering theory. Experiment with parameters to visualize mechanics in real time!
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
       {/* Main Study/Visual Panel */}
       <div className="lg:col-span-8 space-y-6" id="section-detail-panel">

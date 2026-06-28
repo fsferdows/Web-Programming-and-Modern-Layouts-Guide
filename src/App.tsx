@@ -86,7 +86,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans" id="app-container">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 flex flex-col font-sans transition-colors duration-200" id="app-container">
       {/* Floating Zen Mode Capsule Dock */}
       {isZenMode && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center bg-slate-950/95 backdrop-blur-md text-white px-4 py-2 rounded-full shadow-lg border border-slate-800 space-x-3 transition-all duration-300 animate-in fade-in slide-in-from-bottom-6" id="floating-zen-dock">
@@ -157,64 +157,64 @@ export default function App() {
         {/* Welcome Stat banner (Only shows on Study tab for layout breathing room) */}
         {activeTab === "study" && (
           <>
-            <div className="bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 md:p-10 lg:p-12 mb-8 shadow-sm relative overflow-hidden" id="welcome-stat-banner">
-              <div className="absolute -top-10 -right-10 text-slate-100 font-mono text-[120px] sm:text-[180px] md:text-[240px] font-black select-none pointer-events-none leading-none opacity-20">
+            <div className="bg-gradient-to-tr from-indigo-50/70 via-slate-50/60 to-white dark:from-slate-900/95 dark:via-indigo-950/20 dark:to-slate-950 rounded-2xl border border-slate-200/70 dark:border-slate-850 p-6 sm:p-8 md:p-10 lg:p-12 mb-8 shadow-xs dark:shadow-[0_0_40px_rgba(99,102,241,0.05)] relative overflow-hidden" id="welcome-stat-banner">
+              <div className="absolute -top-10 -right-10 text-slate-200/35 dark:text-slate-800/15 font-mono text-[120px] sm:text-[180px] md:text-[240px] font-black select-none pointer-events-none leading-none">
                 5
               </div>
               
-              <div className="relative z-10 max-w-3xl space-y-3">
-                <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-xs font-mono uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              <div className="relative z-10 max-w-3xl space-y-4">
+                <div className="inline-flex items-center space-x-2 bg-indigo-50/80 dark:bg-indigo-950/60 border border-indigo-100/80 dark:border-indigo-900/40 text-indigo-800 dark:text-indigo-300 px-3.5 py-1 rounded-full font-bold text-xs font-mono uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500 animate-pulse" />
                   <span>Modern Web Masterclass Q&A Companion</span>
                 </div>
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight leading-tight">
                   Master the Core Mechanics of Web Programming
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal max-w-2xl">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal max-w-2xl font-sans">
                   Explore the five structural pillars of modern layout architecture, web request routing, and inclusive accessible design. Interact with real-time browser sandbox frames to experiment with CSS targeting, flex box properties, and responsive matrices.
                 </p>
               </div>
 
               {/* Quick Metrics Bar with auto-fitting grid adjusting based on screen width */}
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200" id="welcome-metrics">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200/80 dark:border-slate-800/80" id="welcome-metrics">
                 
-                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                <div className="group flex items-center space-x-3.5 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-50 dark:hover:bg-slate-850 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-900 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-slate-200 group-hover:bg-slate-950 dark:group-hover:bg-slate-100 group-hover:text-white dark:group-hover:text-slate-950 transition-all duration-300 shadow-2xs">
                     <BookOpen className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Core</div>
-                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Topic Sections</div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white leading-none">5 Core</div>
+                    <div className="text-[11px] text-slate-600 dark:text-slate-400 font-semibold font-mono mt-1.5 uppercase tracking-wider">Topic Sections</div>
                   </div>
                 </div>
 
-                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                <div className="group flex items-center space-x-3.5 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-50 dark:hover:bg-slate-850 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-900 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-slate-200 group-hover:bg-slate-950 dark:group-hover:bg-slate-100 group-hover:text-white dark:group-hover:text-slate-950 transition-all duration-300 shadow-2xs">
                     <Code2 className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Presets</div>
-                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Live Playgrounds</div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white leading-none">5 Presets</div>
+                    <div className="text-[11px] text-slate-600 dark:text-slate-400 font-semibold font-mono mt-1.5 uppercase tracking-wider">Live Playgrounds</div>
                   </div>
                 </div>
 
-                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                <div className="group flex items-center space-x-3.5 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-50 dark:hover:bg-slate-850 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-900 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-slate-200 group-hover:bg-slate-950 dark:group-hover:bg-slate-100 group-hover:text-white dark:group-hover:text-slate-950 transition-all duration-300 shadow-2xs">
                     <Boxes className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">2 Interactive</div>
-                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Visual Labs</div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white leading-none">2 Interactive</div>
+                    <div className="text-[11px] text-slate-600 dark:text-slate-400 font-semibold font-mono mt-1.5 uppercase tracking-wider">Visual Labs</div>
                   </div>
                 </div>
 
-                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                <div className="group flex items-center space-x-3.5 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-50 dark:hover:bg-slate-850 p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-900 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-slate-200 group-hover:bg-slate-950 dark:group-hover:bg-slate-100 group-hover:text-white dark:group-hover:text-slate-950 transition-all duration-300 shadow-2xs">
                     <GraduationCap className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">12 Q&As</div>
-                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Practice Quizzes</div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white leading-none">12 Q&As</div>
+                    <div className="text-[11px] text-slate-600 dark:text-slate-400 font-semibold font-mono mt-1.5 uppercase tracking-wider">Practice Quizzes</div>
                   </div>
                 </div>
 

@@ -56,17 +56,17 @@ export default function LayoutSandbox() {
   return (
     <div className="py-6 space-y-6" id="layout-lab-root">
       {/* Intro card banner */}
-      <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+      <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center space-x-3 mb-2" id="lab-banner">
-          <div className="bg-slate-900 text-white p-2 rounded-lg">
-            <Sliders className="w-5 h-5 text-indigo-400" />
+          <div className="bg-slate-950 dark:bg-slate-800 text-white p-2 rounded-lg">
+            <Sliders className="w-5 h-5 text-indigo-455" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900 tracking-tight">Tactile Visual Layout Lab</h2>
-            <p className="text-xs text-slate-500 font-mono mt-0.5">FLEXBOX VS CSS GRID SIMULATION ENGINE</p>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Tactile Visual Layout Lab</h2>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">FLEXBOX VS CSS GRID SIMULATION ENGINE</p>
           </div>
         </div>
-        <p className="text-sm text-slate-600 leading-relaxed max-w-3xl">
+        <p className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed max-w-3xl font-sans">
           Toggle CSS properties on the left to control live stat card layouts. Compare how 1-dimensional Flexbox distributes elements based on content versus how 2-dimensional CSS Grid anchors alignments into rigid columns.
         </p>
 
@@ -74,24 +74,24 @@ export default function LayoutSandbox() {
         <div className="flex flex-col sm:flex-row gap-2 mt-5" id="engine-tabs">
           <button
             onClick={() => setActiveEngine("flex")}
-            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
+            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all select-none ${
               activeEngine === "flex"
-                ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
-                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
+                ? "bg-indigo-650 text-white border-indigo-650 dark:bg-indigo-600 dark:text-white dark:border-indigo-550 shadow-xs font-bold"
+                : "bg-white text-slate-655 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-750"
             }`}
           >
-            <Rows className="w-4 h-4 shrink-0" />
+            <Rows className="w-4 h-4 shrink-0 text-indigo-500 dark:text-indigo-400" />
             <span>1D Flexbox Alignment</span>
           </button>
           <button
             onClick={() => setActiveEngine("grid")}
-            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
+            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all select-none ${
               activeEngine === "grid"
-                ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
+                ? "bg-emerald-600 text-white border-emerald-600 dark:bg-emerald-650 dark:text-white dark:border-emerald-600 shadow-xs font-bold"
+                : "bg-white text-slate-655 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-750"
             }`}
           >
-            <LayoutGrid className="w-4 h-4 shrink-0" />
+            <LayoutGrid className="w-4 h-4 shrink-0 text-emerald-500 dark:text-emerald-400" />
             <span>2D CSS Grid Matrix</span>
           </button>
         </div>
@@ -350,21 +350,21 @@ export default function LayoutSandbox() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 bg-blue-500 rounded-xs shrink-0"></span>
-                  <span className="text-slate-700 font-mono">Border (Solid Blue Line)</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-mono text-[11px]">Border (Solid Blue Line)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 bg-emerald-100 border border-emerald-400 border-dashed rounded-xs shrink-0"></span>
-                  <span className="text-slate-700 font-mono">Padding (Green Spacing)</span>
+                  <span className="w-2.5 h-2.5 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-400 border-dashed rounded-xs shrink-0"></span>
+                  <span className="text-slate-700 dark:text-slate-300 font-mono text-[11px]">Padding (Green Spacing)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 bg-red-500 rounded-xs shrink-0"></span>
-                  <span className="text-slate-700 font-mono">Element (Red Border)</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-mono text-[11px]">Element (Red Border)</span>
                 </div>
               </div>
             )}
 
             {/* Simulated Frame */}
-            <div className="bg-white rounded-lg p-3 sm:p-6 border border-slate-200 shadow-xs min-h-[220px] flex flex-col justify-center overflow-x-auto">
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-3 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs min-h-[220px] flex flex-col justify-center overflow-x-auto">
               {activeEngine === "flex" ? (
                 /* Flexbox Simulated Element Group */
                 <div

@@ -30,18 +30,18 @@ export default function Navigation({
   if (isZenMode) return null;
 
   return (
-    <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 shadow-xs" id="main-header">
+    <header className="bg-white/90 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 sticky top-0 z-40 shadow-xs transition-all duration-200" id="main-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-3.5 gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-3 gap-4">
           <div className="flex flex-wrap items-center justify-between sm:justify-start gap-3.5" id="brand-container">
-            <div className="flex items-center space-x-3">
-              <div className="relative bg-slate-950 text-white p-2 rounded-xl shadow-xs border border-slate-800/80 flex items-center justify-center shrink-0 group">
-                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-indigo-500 ring-2 ring-white"></div>
-                <Boxes className="w-5 h-5 text-indigo-400 group-hover:rotate-6 transition-transform duration-200" />
+            <div className="flex items-center space-x-3.5">
+              <div className="relative bg-slate-950 text-white p-2.5 rounded-2xl shadow-md border border-slate-800/90 flex items-center justify-center shrink-0 group transition-all duration-300 hover:shadow-indigo-500/10">
+                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-indigo-500 ring-2 ring-white animate-pulse"></div>
+                <Boxes className="w-5 h-5 text-indigo-400 group-hover:rotate-12 transition-transform duration-300" />
               </div>
               <div>
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <h1 className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-slate-55 tracking-tight leading-none bg-[#fbfbfb]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h1 className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white tracking-tight leading-none bg-[#fbfbfb] dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-200/40 dark:border-slate-700/50 shadow-3xs transition-colors">
                     Web Academy
                   </h1>
                   <span className="inline-flex items-center text-[9px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
@@ -49,18 +49,18 @@ export default function Navigation({
                   </span>
                   {/* Dynamic Offline Status badge */}
                   {isOffline ? (
-                    <span className="inline-flex items-center gap-1 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-300 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
                       <WifiOff className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400 animate-pulse" />
                       Offline Mode
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-955 border border-emerald-100 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60 text-emerald-850 dark:text-emerald-305 text-[9px] font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
                       <Wifi className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
                       Offline Ready
                     </span>
                   )}
                 </div>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-1 uppercase tracking-wide">
+                <p className="text-[9px] text-slate-500 dark:text-slate-400 font-mono mt-1 uppercase tracking-wider font-semibold">
                   COMPREHENSIVE WEB ENGINEERING ACADEMY
                 </p>
               </div>
@@ -70,7 +70,7 @@ export default function Navigation({
                 href="https://fsferdows.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white px-2.5 py-1 rounded-full font-mono font-bold transition-all duration-300 flex items-center gap-1.5 border border-slate-200 dark:border-slate-700 shadow-3xs hover:border-slate-300 dark:hover:border-slate-600 cursor-pointer"
+                className="text-[10px] bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white px-3 py-1.5 rounded-full font-mono font-bold transition-all duration-300 flex items-center gap-1.5 border border-slate-200/80 dark:border-slate-700 shadow-3xs hover:border-slate-300 dark:hover:border-slate-600 cursor-pointer select-none"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse" />
                 <span>Dev: Ferdows</span>
