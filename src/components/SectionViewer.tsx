@@ -111,40 +111,109 @@ export default function SectionViewer() {
       {/* Main Study/Visual Panel */}
       <div className="lg:col-span-8 space-y-6" id="section-detail-panel">
         {selectedSection === "infrastructure" && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6" id="sec-panel-infrastructure">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-infrastructure">
             <div>
-              <span className="text-xs font-bold uppercase font-mono text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">
-                Topic 1
+              <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
+                Topic 01 // Fundamental Architecture
               </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4">
                 Web Infrastructure & Inclusive Design Paradigm
               </h2>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Modern web systems require a complete balance between mechanical DNS resolution and social accessibility. This dual setup is essential to create high-performance, universally compliant digital products.
+              <p className="text-sm text-slate-700 mt-2.5 leading-relaxed font-normal">
+                High-performance digital products sit at the convergence of fast network resolution and universal semantic design. Developers must master the underlying network lookup flow and design with empathy using the "curb-cut effect" to build robust systems.
               </p>
             </div>
 
             {/* Q&A 1: DNS */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                How does the Domain Name System (DNS) resolve a human-readable URL into a machine-usable IP address?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>How does the Domain Name System (DNS) resolve a human-readable URL into a machine-usable IP address?</span>
               </h3>
-              <p className="text-sm text-slate-700 leading-relaxed pl-7">
-                The DNS lookup process is a recursive, structured sequence. It moves from local browser cache memory to global authoritative servers to translate a domain like <code className="bg-slate-100 text-slate-800 font-mono px-1.5 py-0.5 rounded text-xs">www.example.com</code> into a numeric IP address.
-              </p>
+              
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  The DNS lookup process is a multi-tier, hierarchical, and recursive sequence. When a client requests a URL, it proceeds from local memory caches (to avoid latency) out to global root-level and authoritative servers. This system acts as the "phonebook of the web," mapping human-friendly names to specific TCP/IP server coordinates.
+                </p>
+
+                <div className="bg-slate-950 text-slate-100 p-4 rounded-xl font-mono text-xs space-y-3 border border-slate-800">
+                  <div className="text-indigo-400 font-bold border-b border-slate-800 pb-2 flex items-center justify-between">
+                    <span>🔬 Core Network Infrastructure Definitions</span>
+                    <span className="text-[10px] text-slate-500 font-normal">RFC 1034 / 1035 Standards</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    <div className="space-y-1.5">
+                      <strong className="text-amber-400 text-[11px] block">Recursive Resolver (ISP / 1.1.1.1):</strong>
+                      <p className="text-slate-400 leading-relaxed text-[11px]">
+                        The workhorse server that intercepts the browser's request. If the mapping isn't cached, the resolver traverses the root, TLD, and authoritative nameservers on behalf of the client.
+                      </p>
+                    </div>
+                    <div className="space-y-1.5">
+                      <strong className="text-amber-400 text-[11px] block">Authoritative Nameserver:</strong>
+                      <p className="text-slate-400 leading-relaxed text-[11px]">
+                        The final source of truth for a domain name. Managed by hosting providers or registries, this server holds the master DNS zone files and returns the definitive IP address.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sub-table: Common DNS Records */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-bold text-slate-950 font-mono uppercase tracking-wider">
+                    Essential DNS Resource Record Types
+                  </h4>
+                  <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table className="w-full text-xs text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                          <th className="p-3 font-semibold">Record Type</th>
+                          <th className="p-3 font-semibold">Stands For</th>
+                          <th className="p-3 font-semibold">Target Value Type</th>
+                          <th className="p-3 font-semibold">Core Use Case</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-slate-600 divide-y divide-slate-100">
+                        <tr className="hover:bg-slate-50">
+                          <td className="p-3 font-mono font-bold text-slate-950">A Record</td>
+                          <td className="p-3">Address</td>
+                          <td className="p-3 font-mono">IPv4 Address (e.g. 192.0.2.1)</td>
+                          <td className="p-3">Maps a hostname directly to its corresponding web host's physical IPv4.</td>
+                        </tr>
+                        <tr className="hover:bg-slate-50">
+                          <td className="p-3 font-mono font-bold text-slate-950">AAAA Record</td>
+                          <td className="p-3">IPv6 Address</td>
+                          <td className="p-3 font-mono">IPv6 Address (e.g. 2001:db8::1)</td>
+                          <td className="p-3">Next-generation routing maps hostnames directly to 128-bit IPv6 systems.</td>
+                        </tr>
+                        <tr className="hover:bg-slate-50">
+                          <td className="p-3 font-mono font-bold text-slate-950">CNAME</td>
+                          <td className="p-3">Canonical Name</td>
+                          <td className="p-3 font-mono">Another Domain Name (e.g. ghs.google.com)</td>
+                          <td className="p-3">Creates alias records pointing subdomain configurations to host server records.</td>
+                        </tr>
+                        <tr className="hover:bg-slate-50">
+                          <td className="p-3 font-mono font-bold text-slate-950">TXT Record</td>
+                          <td className="p-3">Text</td>
+                          <td className="p-3">Arbitrary readable text metadata strings</td>
+                          <td className="p-3">Enables third-party safety validation services (e.g., SPF, DKIM email keys).</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 
               {/* DNS STEP BY STEP SIMULATOR */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mt-4">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
                   <h4 className="text-xs font-bold text-slate-800 font-mono uppercase tracking-wider flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-blue-600" /> Interactive DNS Lookup Step-by-Step
+                    <Globe className="w-3.5 h-3.5 text-indigo-600 animate-spin-slow" /> Interactive DNS Lookup Trace Utility
                   </h4>
                   <button
                     onClick={() => setDnsStep(0)}
-                    className="text-xs flex items-center gap-1 text-slate-500 hover:text-slate-900 font-medium cursor-pointer"
+                    className="text-xs flex items-center gap-1 text-slate-500 hover:text-indigo-600 transition-colors font-semibold cursor-pointer"
                   >
-                    <RotateCcw className="w-3 h-3" /> Reset
+                    <RotateCcw className="w-3 h-3" /> Reset Sequence
                   </button>
                 </div>
 
@@ -154,35 +223,35 @@ export default function SectionViewer() {
                       <button
                         key={idx}
                         onClick={() => setDnsStep(idx)}
-                        className={`w-full text-left text-xs px-3 py-2 rounded-lg transition-all duration-200 font-medium ${
+                        className={`w-full text-left text-xs px-3 py-2.5 rounded-lg transition-all duration-300 font-mono font-medium ${
                           dnsStep === idx
-                            ? "bg-slate-950 text-white shadow-sm"
-                            : "bg-white text-slate-600 border border-slate-100 hover:bg-slate-100"
+                            ? "bg-slate-950 text-white shadow-sm ring-1 ring-slate-800"
+                            : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
                         }`}
                       >
-                        {idx + 1}. {s.name}
+                        0{idx + 1}. {s.name}
                       </button>
                     ))}
                   </div>
 
-                  <div className="md:col-span-8 bg-white border border-slate-100 rounded-lg p-4 flex flex-col justify-between">
+                  <div className="md:col-span-8 bg-white border border-slate-200 rounded-lg p-5 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-blue-600 font-mono tracking-widest uppercase">
-                          Step {dnsStep + 1} of 6
+                      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span className="text-xs font-bold text-indigo-600 font-mono tracking-wider uppercase">
+                          Trace Step {dnsStep + 1} of 6
                         </span>
-                        <span className="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded-full">
-                          {dnsStep === 0 || dnsStep === 5 ? "Client local" : "Internet Query"}
+                        <span className="text-[10px] bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded-full border border-slate-200">
+                          {dnsStep === 0 || dnsStep === 5 ? "Local Cache" : "Recursive Network Socket"}
                         </span>
                       </div>
-                      <h4 className="font-semibold text-slate-900 mt-2 text-sm">{dnsSteps[dnsStep].name}</h4>
-                      <p className="text-xs text-slate-600 mt-2 leading-relaxed">{dnsSteps[dnsStep].detail}</p>
+                      <h4 className="font-bold text-slate-950 mt-3 text-sm">{dnsSteps[dnsStep].name}</h4>
+                      <p className="text-xs text-slate-700 mt-2 leading-relaxed">{dnsSteps[dnsStep].detail}</p>
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                      <span className="font-mono">IP Lookup State:</span>
-                      <strong className="font-mono text-slate-900 text-xs">
-                        {dnsStep === 5 ? "93.184.216.34 (Cached)" : dnsStep > 3 ? "93.184.216.34" : "Pending..."}
+                      <span className="font-mono">Resolved IP Buffer:</span>
+                      <strong className="font-mono text-slate-950 text-xs">
+                        {dnsStep === 5 ? "93.184.216.34 (Saved locally)" : dnsStep >= 4 ? "93.184.216.34" : "0.0.0.0 (Unresolved)"}
                       </strong>
                     </div>
                   </div>
@@ -191,46 +260,57 @@ export default function SectionViewer() {
             </div>
 
             {/* Q&A 2: Curb-cut */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                What is the "curb-cut effect" in Web Accessibility, and how does it provide a competitive advantage?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>What is the "curb-cut effect" in Web Accessibility, and how does it provide a competitive advantage?</span>
               </h3>
-              <p className="text-sm text-slate-700 leading-relaxed pl-7">
-                The <strong>"curb-cut effect"</strong> describes how accessibility accommodations built for people with disabilities end up providing massive structural advantages to the general, non-impaired user base as well. Let's look at key examples:
-              </p>
+              
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  The <strong>"curb-cut effect"</strong> describes how accommodations engineered specifically for disabled user profiles end up benefiting the entire spectrum of visitors. In business strategy, building highly accessible, semantic apps isn't just a compliance requirement—it directly enhances user metrics, page weight performance, and organic search engine discovery.
+                </p>
 
-              {/* CURB CUT SIMULATOR AND TABLE */}
-              <div className="pl-7 space-y-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse border border-slate-200 rounded-lg">
+                <div className="bg-amber-50/50 border border-amber-200/70 rounded-xl p-4 text-xs text-amber-900 space-y-2">
+                  <span className="font-bold font-mono text-[10px] text-amber-800 uppercase tracking-wider block">🎓 WCAG 2.1 AAA Accessibility Compliance Metrics</span>
+                  <p className="leading-relaxed">
+                    The World Wide Web Consortium (W3C) establishes three tiers of compatibility standards: <strong>Level A (Minimum)</strong>, <strong>Level AA (Mid/Legal Standard)</strong>, and <strong>Level AAA (Highest Excellence)</strong>. 
+                  </p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li><strong>Contrast AAA Ratio:</strong> Requires a minimum color contrast of <strong>7:1</strong> for normal body text and <strong>4.5:1</strong> for large-scale text (AA requires 4.5:1 and 3:1 respectively).</li>
+                    <li><strong>Keyboard Outline Focus:</strong> Standardized focus outlines (using CSS <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-[10.5px]">:focus-visible</code>) are strictly mandated. Disabling outlines completely violates legal web accessibility requirements.</li>
+                  </ul>
+                </div>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-xl mt-3">
+                  <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50 text-slate-700 font-mono">
-                        <th className="p-2.5 border border-slate-200">Accessibility Feature</th>
-                        <th className="p-2.5 border border-slate-200">Disability Supported</th>
-                        <th className="p-2.5 border border-slate-200">General User Benefit</th>
+                      <tr className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                        <th className="p-3 font-semibold">Accessibility Feature</th>
+                        <th className="p-3 font-semibold">Primary Disability Support</th>
+                        <th className="p-3 font-semibold">Unexpected Competitive Business Advantage</th>
                       </tr>
                     </thead>
-                    <tbody className="text-slate-600">
+                    <tbody className="text-slate-600 divide-y divide-slate-100">
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Alt Text</td>
-                        <td className="p-2.5 border border-slate-200">Visual Impairments</td>
-                        <td className="p-2.5 border border-slate-200">Displays if cell signal fails; improves SEO indexing.</td>
+                        <td className="p-3 font-bold text-slate-950">Image Alt Text</td>
+                        <td className="p-3">Visual Impairments (Screen-Readers)</td>
+                        <td className="p-3 text-slate-700">Enables high-rank search engine image categorization (SEO) and displays if cell signal drops out mid-download.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Captions / Transcripts</td>
-                        <td className="p-2.5 border border-slate-200">Hearing Impairments</td>
-                        <td className="p-2.5 border border-slate-200">Allows viewing videos in silent public places.</td>
+                        <td className="p-3 font-bold text-slate-950">Captions & Subtitles</td>
+                        <td className="p-3">Hearing Impairments (Auditory)</td>
+                        <td className="p-3 text-slate-700">Allows general users to view video tutorials in silent offices, public transits, or noisy library settings.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Keyboard Navigation</td>
-                        <td className="p-2.5 border border-slate-200">Motor Impairments</td>
-                        <td className="p-2.5 border border-slate-200">Increases speed and efficiency for power users/developers.</td>
+                        <td className="p-3 font-bold text-slate-950">Keyboard Navigation focus</td>
+                        <td className="p-3">Motor Impairments (Alternative Input)</td>
+                        <td className="p-3 text-slate-700">Dramatically boosts operational speed, accuracy, and workflow automation for keyboard-only power users and developers.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">High Color Contrast</td>
-                        <td className="p-2.5 border border-slate-200">Low-Vision / Ageing</td>
-                        <td className="p-2.5 border border-slate-200">Enhances readability on phone in bright outdoor sunlight.</td>
+                        <td className="p-3 font-bold text-slate-950">High Contrast & Scaling</td>
+                        <td className="p-3">Low-Vision / Aging Profiles</td>
+                        <td className="p-3 text-slate-700">Crucial for users trying to read documentation on compact smartphone viewports under direct, glaring outdoor sunlight.</td>
                       </tr>
                     </tbody>
                   </table>
@@ -308,61 +388,75 @@ export default function SectionViewer() {
         )}
 
         {selectedSection === "selectors" && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6" id="sec-panel-selectors">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-selectors">
             <div>
-              <span className="text-xs font-bold uppercase font-mono text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">
-                Topic 2
+              <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
+                Topic 02 // Precision Styling
               </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-3">
-                Precision Targeting: CSS Selectors & Specificity
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4">
+                Precision Targeting: CSS Selectors & Specificity Mechanics
               </h2>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Applying rules to elements requires clear selector knowledge. If selector rules collide, the browser uses strict mathematical math vectors to determine which style overrides which.
+              <p className="text-sm text-slate-700 mt-2.5 leading-relaxed font-normal">
+                Applying design systems to semantic markup requires absolute selector mastery. When styling rules overlap, the browser's CSS parser applies strict mathematical vector equations to determine which rules override others.
               </p>
             </div>
 
             {/* Selector list table */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                What are the primary CSS selector types used to target HTML elements?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>What are the primary CSS selector types and combinators used to target HTML elements?</span>
               </h3>
               
-              <div className="pl-7 space-y-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse border border-slate-200 rounded-lg">
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  In production systems, developers avoid simple global styling by utilizing relationship-driven combinators and behavioral selectors. This prevents namespace pollution and maintains component isolation.
+                </p>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                  <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50 text-slate-700 font-mono">
-                        <th className="p-2.5 border border-slate-200">Selector Type</th>
-                        <th className="p-2.5 border border-slate-200">Syntax</th>
-                        <th className="p-2.5 border border-slate-200">Target Behavior</th>
+                      <tr className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                        <th className="p-3 font-semibold">Selector Category</th>
+                        <th className="p-3 font-semibold">CSS Syntax Example</th>
+                        <th className="p-3 font-semibold">Target Behavior / Relationship Model</th>
                       </tr>
                     </thead>
-                    <tbody className="text-slate-600">
+                    <tbody className="text-slate-600 divide-y divide-slate-100">
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Element</td>
-                        <td className="p-2.5 border border-slate-200"><code className="bg-slate-100 font-mono px-1 rounded text-red-600">p &#123; &#125;</code></td>
-                        <td className="p-2.5 border border-slate-200">Targets all p elements globally.</td>
+                        <td className="p-3 font-bold text-slate-950">Element (Tag)</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">p &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Matches all instances of that HTML tag globally across the entire document object model.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Class</td>
-                        <td className="p-2.5 border border-slate-200"><code className="bg-slate-100 font-mono px-1 rounded text-red-600">.note &#123; &#125;</code></td>
-                        <td className="p-2.5 border border-slate-200">Targets elements with class=&quot;note&quot;.</td>
+                        <td className="p-3 font-bold text-slate-950">Class Selector</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">.btn-primary &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Matches any elements containing the specified class attribute value (reusable utility standard).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">ID</td>
-                        <td className="p-2.5 border border-slate-200"><code className="bg-slate-100 font-mono px-1 rounded text-red-600">#main &#123; &#125;</code></td>
-                        <td className="p-2.5 border border-slate-200">Targets the unique element with id=&quot;main&quot;.</td>
+                        <td className="p-3 font-bold text-slate-950">ID Selector</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">#main-navigation &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Matches the single unique element containing the specified ID attribute (strictly singular per page).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Universal</td>
-                        <td className="p-2.5 border border-slate-200"><code className="bg-slate-100 font-mono px-1 rounded text-red-600">* &#123; &#125;</code></td>
-                        <td className="p-2.5 border border-slate-200">Targets every single element on the page.</td>
+                        <td className="p-3 font-bold text-slate-950">Descendant Combinator</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">article p &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Targets any paragraph elements nested <strong>anywhere</strong> inside an article element (arbitrary depth).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-semibold text-slate-950">Group</td>
-                        <td className="p-2.5 border border-slate-200"><code className="bg-slate-100 font-mono px-1 rounded text-red-600">h1, h2 &#123; &#125;</code></td>
-                        <td className="p-2.5 border border-slate-200">Applies same rules to h1 and h2 simultaneously.</td>
+                        <td className="p-3 font-bold text-slate-950">Child Combinator</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">ul &gt; li &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Targets list items that are <strong>direct first-level children</strong> of a ul container, ignoring nested lists.</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="p-3 font-bold text-slate-950">Attribute Selector</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">input[type=&quot;checkbox&quot;] &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Filters elements strictly based on the presence or exact match value of their HTML attributes.</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="p-3 font-bold text-slate-950">Pseudo-Class</td>
+                        <td className="p-3"><code className="bg-slate-100 font-mono px-1.5 py-0.5 rounded text-indigo-600">a:hover, li:nth-child(even) &#123; &#125;</code></td>
+                        <td className="p-3 text-slate-700">Targets elements during specific state changes or structural positions in a list sequence.</td>
                       </tr>
                     </tbody>
                   </table>
@@ -371,16 +465,31 @@ export default function SectionViewer() {
             </div>
 
             {/* CSS Specificity Calculator Widget */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                How is CSS Specificity weight calculated? Test it in real time!
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>How is CSS Specificity weight calculated? Test it in real time!</span>
               </h3>
               
-              <div className="pl-7 space-y-4">
-                <p className="text-sm text-slate-700">
-                  CSS uses a 3-part specificity score vector: <code>(ID, Class, Element)</code>. Use the simulator below to add components and see how the mathematical score builds up.
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Specificity is calculated by the user agent as a 3-column vector score representing: <code>(IDs, Classes/Pseudo-classes, Elements/Pseudo-elements)</code>. Inline style declarations override standard vectors, while the <code>!important</code> flag is a direct override tool (use with caution in maintainable systems).
                 </p>
+
+                <div className="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs space-y-3 border border-slate-800">
+                  <div className="text-indigo-400 font-bold border-b border-slate-800 pb-2 flex items-center justify-between">
+                    <span>📑 Rule Overriding Priority Order (Highest to Lowest)</span>
+                    <span className="text-[10px] text-slate-500 font-normal">W3C Cascading Spec</span>
+                  </div>
+                  <ol className="list-decimal pl-4 space-y-1 text-slate-300">
+                    <li><strong className="text-rose-400">!important Declarations</strong> — Force overrides everything (not a selector, but a rule modifier).</li>
+                    <li><strong className="text-amber-400">Inline Styles</strong> — Injected directly into the element style attribute (1-0-0-0 equivalent).</li>
+                    <li><strong className="text-indigo-400">ID Selectors (#example)</strong> — Weighs 1-0-0 (overrides any number of class selectors).</li>
+                    <li><strong className="text-sky-400">Class Selectors / Attribute Selectors / Pseudo-classes (.item)</strong> — Weighs 0-1-0.</li>
+                    <li><strong className="text-emerald-400">Element Selectors / Pseudo-elements (div, ::before)</strong> — Weighs 0-0-1.</li>
+                    <li><strong className="text-slate-400">Universal Selector (*) / Inherited Values</strong> — Weighs 0-0-0 (lowest priority).</li>
+                  </ol>
+                </div>
 
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
                   <h4 className="text-xs font-bold text-slate-800 font-mono uppercase tracking-wider mb-4">
@@ -388,47 +497,46 @@ export default function SectionViewer() {
                   </h4>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                    <div className="bg-white border p-3 rounded-lg flex flex-col items-center">
-                      <span className="text-xs font-bold text-red-600 font-mono uppercase">IDs</span>
-                      <span className="text-3xl font-extrabold text-slate-900 mt-1">{specId}</span>
-                      <div className="flex gap-1.5 mt-2">
-                        <button onClick={() => setSpecId(Math.max(0, specId - 1))} className="bg-slate-100 hover:bg-slate-200 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">-</button>
-                        <button onClick={() => setSpecId(specId + 1)} className="bg-slate-900 text-white hover:bg-slate-850 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">+</button>
+                    <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center shadow-2xs">
+                      <span className="text-xs font-bold text-red-600 font-mono uppercase tracking-wider">IDs (A)</span>
+                      <span className="text-3xl font-extrabold text-slate-950 mt-1">{specId}</span>
+                      <div className="flex gap-1.5 mt-3">
+                        <button onClick={() => setSpecId(Math.max(0, specId - 1))} className="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors border border-slate-200">-</button>
+                        <button onClick={() => setSpecId(specId + 1)} className="bg-slate-950 text-white hover:bg-slate-800 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors">+</button>
                       </div>
-                      <span className="text-[10px] text-slate-400 mt-1 font-mono">e.g., #header</span>
+                      <span className="text-[10px] text-slate-400 mt-2 font-mono">e.g., #header</span>
                     </div>
 
-                    <div className="bg-white border p-3 rounded-lg flex flex-col items-center">
-                      <span className="text-xs font-bold text-blue-600 font-mono uppercase">Classes</span>
-                      <span className="text-3xl font-extrabold text-slate-900 mt-1">{specClass}</span>
-                      <div className="flex gap-1.5 mt-2">
-                        <button onClick={() => setSpecClass(Math.max(0, specClass - 1))} className="bg-slate-100 hover:bg-slate-200 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">-</button>
-                        <button onClick={() => setSpecClass(specClass + 1)} className="bg-slate-900 text-white hover:bg-slate-850 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">+</button>
+                    <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center shadow-2xs">
+                      <span className="text-xs font-bold text-indigo-600 font-mono uppercase tracking-wider">Classes (B)</span>
+                      <span className="text-3xl font-extrabold text-slate-950 mt-1">{specClass}</span>
+                      <div className="flex gap-1.5 mt-3">
+                        <button onClick={() => setSpecClass(Math.max(0, specClass - 1))} className="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors border border-slate-200">-</button>
+                        <button onClick={() => setSpecClass(specClass + 1)} className="bg-slate-950 text-white hover:bg-slate-800 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors">+</button>
                       </div>
-                      <span className="text-[10px] text-slate-400 mt-1 font-mono">e.g., .nav-item</span>
+                      <span className="text-[10px] text-slate-400 mt-2 font-mono">e.g., .nav-item, :hover</span>
                     </div>
 
-                    <div className="bg-white border p-3 rounded-lg flex flex-col items-center">
-                      <span className="text-xs font-bold text-green-600 font-mono uppercase">Elements</span>
-                      <span className="text-3xl font-extrabold text-slate-900 mt-1">{specElem}</span>
-                      <div className="flex gap-1.5 mt-2">
-                        <button onClick={() => setSpecElem(Math.max(0, specElem - 1))} className="bg-slate-100 hover:bg-slate-200 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">-</button>
-                        <button onClick={() => setSpecElem(specElem + 1)} className="bg-slate-900 text-white hover:bg-slate-850 px-2.5 py-0.5 rounded text-xs font-bold cursor-pointer">+</button>
+                    <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center shadow-2xs">
+                      <span className="text-xs font-bold text-emerald-600 font-mono uppercase tracking-wider">Elements (C)</span>
+                      <span className="text-3xl font-extrabold text-slate-950 mt-1">{specElem}</span>
+                      <div className="flex gap-1.5 mt-3">
+                        <button onClick={() => setSpecElem(Math.max(0, specElem - 1))} className="bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors border border-slate-200">-</button>
+                        <button onClick={() => setSpecElem(specElem + 1)} className="bg-slate-950 text-white hover:bg-slate-800 px-3 py-1 rounded text-xs font-bold cursor-pointer transition-colors">+</button>
                       </div>
-                      <span className="text-[10px] text-slate-400 mt-1 font-mono">e.g., div, span</span>
+                      <span className="text-[10px] text-slate-400 mt-2 font-mono">e.g., div, span, p</span>
                     </div>
                   </div>
 
-                  <div className="bg-slate-900 text-white p-4 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="bg-slate-950 text-white p-4 sm:p-5 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-800 shadow-sm">
                     <div>
-                      <div className="text-[10px] font-mono tracking-widest text-slate-400 uppercase">Computed Specificity Vector Score</div>
-                      <div className="text-2xl font-mono font-bold text-amber-400 mt-1">
+                      <div className="text-[10px] font-mono tracking-widest text-slate-400 uppercase">Computed Specificity Vector</div>
+                      <div className="text-2xl sm:text-3xl font-mono font-bold text-indigo-400 mt-1">
                         ({specId}, {specClass}, {specElem})
                       </div>
                     </div>
                     <div className="text-xs text-slate-300 md:text-right leading-relaxed max-w-sm">
-                      This selector translates roughly to a value weight of <strong>{specId * 100 + specClass * 10 + specElem}</strong>. 
-                      An ID count of 1 will instantly override any number of nested classes or elements (e.g., 1-0-0 exceeds 0-15-20).
+                      This selector translates roughly to a weight vector. An ID count of 1 will instantly override any number of nested classes or elements (e.g., <code className="text-indigo-400 bg-slate-900 px-1 py-0.5 rounded">1, 0, 0</code> overrides <code className="text-rose-400 bg-slate-900 px-1 py-0.5 rounded">0, 15, 20</code>). When weights are identical, the rule declared latest in the stylesheet wins.
                     </div>
                   </div>
                 </div>
@@ -438,58 +546,96 @@ export default function SectionViewer() {
         )}
 
         {selectedSection === "html-elements" && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6" id="sec-panel-html-elements">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-html-elements">
             <div>
-              <span className="text-xs font-bold uppercase font-mono text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
-                Topic 3
+              <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
+                Topic 03 // Document Architecture
               </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4">
                 HTML Structural Elements & Display Mechanics
               </h2>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Elements occupy viewport layouts differently based on their default CSS display behavior. Mastering Block, Inline, and Inline-block modes is crucial to prevent sizing bugs.
+              <p className="text-sm text-slate-700 mt-2.5 leading-relaxed font-normal">
+                Web rendering engines map out components into an accessibility hierarchy and physical boxes. Mastering document semantics and the CSS Display Box mechanics is essential to prevent sizing layout overflows and broken layouts.
               </p>
             </div>
 
+            {/* Semantic HTML & Box Model Definitions Grid */}
+            <div className="bg-slate-900 text-slate-200 p-5 rounded-xl font-mono text-xs space-y-4 border border-slate-800">
+              <div className="text-indigo-400 font-bold border-b border-slate-800 pb-2 flex items-center justify-between">
+                <span>📦 Core Layout Architecture Concepts</span>
+                <span className="text-[10px] text-slate-500 font-normal">W3C Box Model & Semantics</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-slate-300">
+                <div className="space-y-1.5">
+                  <strong className="text-amber-400 text-[11px] block uppercase tracking-wider">The CSS Box Model:</strong>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Every element is modeled as a rectangular box. It has 4 distinct zones: <strong>Content</strong>, <strong>Padding</strong>, <strong>Border</strong>, and <strong>Margin</strong>. 
+                    <br />
+                    Using <code className="bg-slate-950 px-1 py-0.5 rounded text-sky-400">box-sizing: border-box</code> forces the width/height variables to encapsulate padding and borders, avoiding complex padding calculations.
+                  </p>
+                </div>
+                <div className="space-y-1.5">
+                  <strong className="text-amber-400 text-[11px] block uppercase tracking-wider">Semantic HTML & Accessibility Tree:</strong>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Semantic elements like <code className="bg-slate-950 px-1 text-sky-400">&lt;main&gt;</code>, <code className="bg-slate-950 px-1 text-sky-400">&lt;article&gt;</code>, and <code className="bg-slate-950 px-1 text-sky-400">&lt;nav&gt;</code> translate directly into browser ARIA landmark nodes. This allows screen readers to navigate via structure instead of raw text.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Table layout display properties */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                What are the fundamental differences between block, inline, and inline-block displays?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>What are the fundamental differences between block, inline, and inline-block display values?</span>
               </h3>
               
-              <div className="pl-7 space-y-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse border border-slate-200 rounded-lg">
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Display behaviors dictate document flow. Changing an inline element to block alters how margins, paddings, and alignment rules affect it.
+                </p>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                  <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50 text-slate-700 font-mono">
-                        <th className="p-2.5 border border-slate-200">Display Value</th>
-                        <th className="p-2.5 border border-slate-200">Starts New Line?</th>
-                        <th className="p-2.5 border border-slate-200">Respects custom Width/Height?</th>
-                        <th className="p-2.5 border border-slate-200">Typical CSS Behavior</th>
+                      <tr className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                        <th className="p-3 font-semibold">Display Value</th>
+                        <th className="p-3 font-semibold">Starts New Line?</th>
+                        <th className="p-3 font-semibold">Respects Width/Height?</th>
+                        <th className="p-3 font-semibold">Typical CSS / Element Behavior</th>
                       </tr>
                     </thead>
-                    <tbody className="text-slate-600">
+                    <tbody className="text-slate-600 divide-y divide-slate-100">
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Block</td>
-                        <td className="p-2.5 border border-slate-200 text-emerald-600 font-semibold">Yes</td>
-                        <td className="p-2.5 border border-slate-200 text-emerald-600 font-semibold">Yes</td>
-                        <td className="p-2.5 border border-slate-200">Fills full width of parent container (e.g., &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;).</td>
+                        <td className="p-3 font-bold text-slate-950">Block</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono">Yes</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono">Yes</td>
+                        <td className="p-3 text-slate-700">Fills full width of parent container (e.g., &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;, &lt;section&gt;).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Inline</td>
-                        <td className="p-2.5 border border-slate-200 text-red-600 font-semibold">No</td>
-                        <td className="p-2.5 border border-slate-200 text-red-600 font-semibold">No</td>
-                        <td className="p-2.5 border border-slate-200">Flows within horizontal text lines. Custom sizing is ignored (e.g., &lt;span&gt;, &lt;a&gt;, &lt;strong&gt;).</td>
+                        <td className="p-3 font-bold text-slate-950">Inline</td>
+                        <td className="p-3 text-red-600 font-semibold font-mono">No</td>
+                        <td className="p-3 text-red-600 font-semibold font-mono">No</td>
+                        <td className="p-3 text-slate-700">Flows within horizontal text lines. Top/bottom margins and custom sizing parameters are completely ignored (e.g., &lt;span&gt;, &lt;a&gt;, &lt;strong&gt;).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Inline-block</td>
-                        <td className="p-2.5 border border-slate-200 text-red-600 font-semibold">No</td>
-                        <td className="p-2.5 border border-slate-200 text-emerald-600 font-semibold">Yes</td>
-                        <td className="p-2.5 border border-slate-200">Sits inline but behaves like block, allowing custom sizing and padding. (Ideal for styled buttons).</td>
+                        <td className="p-3 font-bold text-slate-950">Inline-block</td>
+                        <td className="p-3 text-red-600 font-semibold font-mono">No</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono">Yes</td>
+                        <td className="p-3 text-slate-700">Flows inline with normal text but respects geometric block styling rules, allowing custom width, height, and padding (ideal for call-to-action buttons).</td>
                       </tr>
                     </tbody>
                   </table>
+                </div>
+
+                {/* Subheading for tables */}
+                <div className="space-y-2 mt-4 pt-4 border-t border-slate-100">
+                  <h4 className="text-xs font-bold text-slate-950 font-mono uppercase tracking-wider">
+                    Tabular Merging Mechanics
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    To merge cells across multiple columns, we use the <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-[11px]">colspan</code> attribute. To stretch a cell vertically over multiple rows, we use <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-[11px]">rowspan</code>. Utilizing these correctly guarantees structured reading flows in data-grid designs.
+                  </p>
                 </div>
 
                 {/* Tactile display sandbox */}
@@ -511,12 +657,12 @@ export default function SectionViewer() {
                                 boxDisplay === mode ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100"
                               }`}
                             >
-                              {mode}
+                               {mode}
                             </button>
                           ))}
                         </div>
                       </div>
-
+ 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-xs font-semibold text-slate-600 block mb-1">Width: {boxWidth}px</label>
@@ -542,7 +688,7 @@ export default function SectionViewer() {
                         </div>
                       </div>
                     </div>
-
+ 
                     <div className="bg-slate-100 rounded-lg p-3 border border-slate-200 flex flex-col justify-center">
                       <div className="text-[10px] font-mono text-slate-500 mb-2">Simulated Text Flow Behavior:</div>
                       <div className="text-xs leading-relaxed bg-white p-3 rounded-md border border-slate-200 overflow-hidden min-h-[120px]">
@@ -571,7 +717,7 @@ export default function SectionViewer() {
                       </div>
                     </div>
                   </div>
-
+ 
                   <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-900">
                     {boxDisplay === "inline" ? (
                       <strong>⚠️ Display Alert:</strong>
@@ -591,60 +737,72 @@ export default function SectionViewer() {
         )}
 
         {selectedSection === "responsive-design" && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6" id="sec-panel-responsive">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-responsive">
             <div>
-              <span className="text-xs font-bold uppercase font-mono text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">
-                Topic 4
+              <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
+                Topic 04 // Responsive Systems
               </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-3">
-                The Architecture of Responsive Design
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4">
+                The Architecture of Responsive Web Design
               </h2>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Responsive design eliminates device borders, allowing a single unified codebase to serve smart phone screens and wide professional monitors seamlessly.
+              <p className="text-sm text-slate-700 mt-2.5 leading-relaxed font-normal">
+                Responsive design eliminates device borders. A single, unified codebase dynamically rearranges layout hierarchies and scales visual resources based on device capabilities.
               </p>
             </div>
 
             {/* Q&A 1: responsive without queries */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                Can a web page be responsive without explicitly using media queries?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>Can a web page be highly responsive without explicitly writing media queries?</span>
               </h3>
-              <div className="pl-7 space-y-3">
-                <p className="text-sm text-slate-700 leading-relaxed">
-                  Yes! By using fluid CSS layouts, elements resize dynamically across any viewport size. Key fluid mechanics include:
+              <div className="pl-8 space-y-4 text-sm text-slate-700">
+                <p className="leading-relaxed">
+                  Yes! Modern CSS layouts rely on fluid formulas that compute rendering dimensions dynamically instead of relying on hardcoded breakpoint steps. Key fluid mechanics include:
                 </p>
-                <ul className="list-disc pl-5 text-xs text-slate-600 space-y-2 leading-relaxed">
-                  <li><strong>Relative Units:</strong> Declaring percentages (<code>%</code>), viewport width (<code>vw</code>), viewport height (<code>vh</code>), or parent-relative values (<code>rem</code>, <code>em</code>) instead of rigid pixels (<code>px</code>).</li>
-                  <li><strong>Flexible Containers:</strong> Declaring <code>flex-wrap: wrap</code> in Flexbox or using grid repetition utilities like <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code>.</li>
-                  <li><strong>Fluid Media Elements:</strong> Assigning <code>max-width: 100%</code> and <code>height: auto</code> globally to images to prevent page overflows.</li>
+                <ul className="list-disc pl-5 space-y-2 leading-relaxed text-slate-600 text-xs">
+                  <li><strong>Relative Sizing Units:</strong> Declaring percentages (<code>%</code>), viewport width (<code>vw</code>), viewport height (<code>vh</code>), or parent-relative values (<code>rem</code>, <code>em</code>) instead of rigid pixels (<code>px</code>).</li>
+                  <li><strong>CSS Clamp Function (Fluid Typography):</strong> Rather than defining separate font sizes inside multiple breakpoints, developers use:
+                    <br />
+                    <code className="block bg-slate-900 text-amber-400 p-2.5 rounded font-mono text-[11px] my-1 border border-slate-800 leading-relaxed">
+                      font-size: clamp(1rem, 2vw + 0.75rem, 2.5rem);
+                    </code>
+                    This mathematical expression binds font-scale cleanly to screen widths while guaranteeing it stays strictly bounded between a minimum floor and a maximum ceiling.
+                  </li>
+                  <li><strong>Layout Wrapping & Grid Auto-Fit:</strong> Enabling wrapping in Flexbox (<code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-[11px]">flex-wrap: wrap</code>) and configuring CSS Grid containers using:
+                    <br />
+                    <code className="block bg-slate-900 text-indigo-400 p-2.5 rounded font-mono text-[11px] my-1 border border-slate-800 leading-relaxed">
+                      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    </code>
+                    This creates dynamic multi-column grids that wrap and scale without requiring media queries.
+                  </li>
                 </ul>
               </div>
             </div>
 
             {/* Q&A 2: Viewport tag */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                What is the strategic purpose of the HTML5 Viewport Meta Tag?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>What is the strategic purpose of the HTML5 Viewport Meta Tag?</span>
               </h3>
               
-              <div className="pl-7 space-y-4">
+              <div className="pl-8 space-y-4">
                 <p className="text-sm text-slate-700 leading-relaxed">
-                  The HTML viewport meta tag is critical for styling. It tells mobile browser rendering engines to match the scale 1:1 with device physical independent pixels, stopping the browser from shrinking page text into unreadable sizes.
+                  Mobile devices have high-density pixel displays. Without the viewport tag, mobile browsers render pages at a simulated desktop width of <strong>980px</strong> and shrink the output to fit, making copy microscopic. The viewport tag binds the layout's viewport boundaries strictly to the hardware device width.
                 </p>
 
                 {/* Viewport Meta Tag Simulator */}
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                  <div className="flex items-center justify-between mb-3 border-b pb-2">
+                  <div className="flex items-center justify-between mb-3 border-b border-slate-200/80 pb-2">
                     <h4 className="text-xs font-bold text-slate-800 font-mono uppercase tracking-wider flex items-center gap-1.5">
-                      <Smartphone className="w-3.5 h-3.5 text-purple-600" /> Viewport Meta Tag Visualizer
+                      <Smartphone className="w-3.5 h-3.5 text-indigo-600" /> Viewport Meta Tag Visualizer
                     </h4>
                     <div className="flex items-center space-x-1">
                       <span className="text-xs font-medium text-slate-500 font-mono">Viewport Tag:</span>
                       <button
                         onClick={() => setViewportMeta(!viewportMeta)}
-                        className={`text-[10px] font-mono px-2 py-1 rounded font-bold cursor-pointer transition-all ${
+                        className={`text-[10px] font-mono px-2.5 py-1 rounded-md font-bold cursor-pointer transition-all ${
                           viewportMeta ? "bg-green-600 text-white" : "bg-red-600 text-white"
                         }`}
                       >
@@ -654,9 +812,8 @@ export default function SectionViewer() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white border rounded-lg p-3">
-                      <div className="text-[10px] font-mono text-slate-400 mb-2">Simulated Smartphone Render</div>
-                      <div className="border-4 border-slate-800 rounded-2xl w-[220px] h-[340px] mx-auto overflow-hidden relative bg-slate-50 flex flex-col shadow-inner">
+                    <div className="bg-white border border-slate-200 rounded-xl p-3 flex justify-center">
+                      <div className="w-[220px] h-[340px] overflow-hidden relative bg-slate-50 flex flex-col border border-slate-300 rounded-xl shadow-inner">
                         {/* Status bar mock */}
                         <div className="bg-slate-900 text-white text-[8px] px-3 py-1 flex justify-between font-mono">
                           <span>10:38 AM</span>
@@ -667,22 +824,22 @@ export default function SectionViewer() {
                           /* Responsive view */
                           <div className="p-3 space-y-2 flex-1 flex flex-col justify-between overflow-y-auto">
                             <div className="space-y-2">
-                              <header className="bg-purple-600 text-white p-2 rounded text-center text-xs font-bold">
+                              <header className="bg-indigo-600 text-white p-2 rounded text-center text-xs font-bold">
                                 Modern Header
                               </header>
-                              <div className="bg-white border p-2 rounded text-[10px] leading-relaxed text-slate-600">
+                              <div className="bg-white border border-slate-200 p-2 rounded text-[10px] leading-relaxed text-slate-600">
                                 <h5 className="font-bold text-slate-900 text-[11px] mb-1">Easy Reading</h5>
                                 Text flows naturally at a readable size. It aligns perfectly with the device screen.
                               </div>
                             </div>
-                            <button className="bg-purple-600 text-white text-[10px] py-1.5 px-3 rounded font-bold">
+                            <button className="bg-indigo-600 text-white text-[10px] py-1.5 px-3 rounded font-bold">
                               Interactive Button
                             </button>
                           </div>
                         ) : (
                           /* Non-responsive scale-down desktop view */
                           <div className="origin-top-left scale-[0.35] w-[620px] h-[950px] p-6 space-y-6 absolute top-6 left-1 bg-white">
-                            <header className="bg-purple-600 text-white p-4 rounded text-center text-2xl font-bold">
+                            <header className="bg-indigo-600 text-white p-4 rounded text-center text-2xl font-bold">
                               Desktop Layout Header
                             </header>
                             <div className="grid grid-cols-3 gap-4">
@@ -694,7 +851,7 @@ export default function SectionViewer() {
                                 Sidebar Column text content here.
                               </div>
                             </div>
-                            <button className="bg-purple-600 text-white text-base py-3 px-6 rounded font-bold w-full">
+                            <button className="bg-indigo-600 text-white text-base py-3 px-6 rounded font-bold w-full">
                               Interactive Button
                             </button>
                           </div>
@@ -712,7 +869,7 @@ export default function SectionViewer() {
                             &nbsp;&nbsp;initial-scale=1.0&quot;&gt;
                           </div>
                         ) : (
-                          <div className="text-red-400 mt-1 line-through">
+                          <div className="text-red-400 mt-1 line-through font-mono">
                             &lt;!-- Viewport tag missing! --&gt;
                           </div>
                         )}
@@ -730,51 +887,65 @@ export default function SectionViewer() {
         )}
 
         {selectedSection === "layout-strategy" && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6" id="sec-panel-layout">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-layout">
             <div>
-              <span className="text-xs font-bold uppercase font-mono text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md">
-                Topic 5
+              <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
+                Topic 05 // Layout Strategy
               </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4">
                 Advanced Layout Strategy: Positioning, Flexbox & Grid
               </h2>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                Accurate layout architecture relies on using the right positioning, Flexbox alignment, or Grid matrix templates depending on the design dimensions.
+              <p className="text-sm text-slate-700 mt-2.5 leading-relaxed font-normal">
+                Web layouts demand predictable rendering. Selecting between explicit positioning coordinates, Flexbox linear flows, or CSS Grid coordinates prevents visual shifting and ensures accessibility compatibility.
               </p>
             </div>
 
             {/* Positioning property details */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                How do CSS positioning values affect the normal document flow?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>How do CSS positioning values manipulate document layout flows and stacking context layers?</span>
               </h3>
               
-              <div className="pl-7 space-y-4">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse border border-slate-200 rounded-lg">
+              <div className="pl-8 space-y-4">
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Positioning tells the browser's layout engine to bypass standard block and inline line-wrap flows. When layers overlap, the browser evaluates depth using <strong>z-index values</strong> within local <strong>Stacking Contexts</strong> (which are triggered by attributes like positioning, custom `opacity`, or 3D properties).
+                </p>
+
+                <div className="overflow-x-auto border border-slate-200 rounded-xl">
+                  <table className="w-full text-xs text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-50 text-slate-700 font-mono">
-                        <th className="p-2.5 border border-slate-200">Position</th>
-                        <th className="p-2.5 border border-slate-200">Viewport / Flow Relationship</th>
+                      <tr className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                        <th className="p-3 font-semibold">Position Mode</th>
+                        <th className="p-3 font-semibold">In Normal flow?</th>
+                        <th className="p-3 font-semibold">Coordinate Anchor point Relationship</th>
                       </tr>
                     </thead>
-                    <tbody className="text-slate-600">
+                    <tbody className="text-slate-600 divide-y divide-slate-100">
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Relative</td>
-                        <td className="p-2.5 border border-slate-200">Stays in normal flow; shifted relative to its original spot without disturbing adjacent neighbors.</td>
+                        <td className="p-3 font-bold text-slate-950">Static</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono">Yes</td>
+                        <td className="p-3 text-slate-700">The default mode. Ignores top, right, bottom, left offsets and standard stacking order.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Absolute</td>
-                        <td className="p-2.5 border border-slate-200 text-red-600 font-semibold">Removed from flow; positioned relative to its nearest positioned ancestor.</td>
+                        <td className="p-3 font-bold text-slate-950">Relative</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono">Yes</td>
+                        <td className="p-3 text-slate-700">Offset offsets are relative to the element's default position in flow without impacting adjacent siblings.</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Fixed</td>
-                        <td className="p-2.5 border border-slate-200 text-red-600 font-semibold">Removed from flow; pinned to a specific coordinate inside the viewport (never scrolls).</td>
+                        <td className="p-3 font-bold text-slate-950">Absolute</td>
+                        <td className="p-3 text-red-600 font-semibold font-mono">No</td>
+                        <td className="p-3 text-slate-700">Completely removed from flow. Anchored to coordinates relative to its nearest <strong>positioned ancestor</strong> (non-static container).</td>
                       </tr>
                       <tr className="hover:bg-slate-50">
-                        <td className="p-2.5 border border-slate-200 font-bold text-slate-950">Sticky</td>
-                        <td className="p-2.5 border border-slate-200">Behaves normally in flow until a scroll threshold is met, then acts like fixed within parent box boundaries.</td>
+                        <td className="p-3 font-bold text-slate-950">Fixed</td>
+                        <td className="p-3 text-red-600 font-semibold font-mono">No</td>
+                        <td className="p-3 text-slate-700">Completely removed from flow. Anchored relative to the screen's browser viewport frame. Stays locked during page scrolls.</td>
+                      </tr>
+                      <tr className="hover:bg-slate-50">
+                        <td className="p-3 font-bold text-slate-950">Sticky</td>
+                        <td className="p-3 text-emerald-600 font-semibold font-mono font-sans text-xs">Hybrid</td>
+                        <td className="p-3 text-slate-700">Behaves normally in flow until a scroll threshold is met, then pins as "fixed" inside its direct parent container boundary.</td>
                       </tr>
                     </tbody>
                   </table>
@@ -847,7 +1018,7 @@ export default function SectionViewer() {
 
                     <div className="md:col-span-4 flex flex-col justify-center space-y-2">
                       <h5 className="text-xs font-bold text-slate-800">Behavior Notes:</h5>
-                      <p className="text-[11px] text-slate-600 leading-relaxed bg-indigo-50 border border-indigo-100 rounded-lg p-3">
+                      <p className="text-[11px] text-slate-650 leading-relaxed bg-indigo-50 border border-indigo-100 rounded-lg p-3">
                         {boxPosition === "relative" && "The element remains in flow, nudged 15px to the right of its original slot, leaving behind an empty space placeholder."}
                         {boxPosition === "absolute" && "Completely removed from document flow. It anchors precisely (20px top, 20px right) inside the nearest positioned ancestor (the parent scrollbox)."}
                         {boxPosition === "fixed" && "Removed from flow. In the real window, it anchors relative to the screen. Here, we simulate it pinned cleanly inside the scroll window."}
@@ -860,35 +1031,39 @@ export default function SectionViewer() {
             </div>
 
             {/* Strategic Flexbox vs Grid */}
-            <div className="border-t border-slate-100 pt-6 space-y-4">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-xs bg-slate-900 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono">Q</span>
-                Strategic Evaluation: When should a developer choose Flexbox vs. CSS Grid?
+            <div className="border-t border-slate-200/60 pt-6 space-y-4">
+              <h3 className="text-base sm:text-lg font-bold text-slate-950 flex items-start gap-3">
+                <span className="text-xs bg-slate-950 text-white rounded-full w-5 h-5 flex items-center justify-center font-mono shrink-0 mt-0.5">Q</span>
+                <span>Strategic Evaluation: When should a developer choose Flexbox over CSS Grid?</span>
               </h3>
-              <div className="pl-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                  <h4 className="text-xs font-extrabold text-blue-700 font-mono uppercase tracking-wider mb-2">
-                    1D Flexbox (Content-Driven)
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-3">
-                    Best for **one-dimensional** alignments (a single row OR a single column). Ideal for distributing items based on their content size.
-                  </p>
-                  <div className="bg-white p-2.5 rounded border text-[11px] font-mono text-slate-700">
-                    <span className="text-indigo-600">display</span>: flex;<br />
-                    <span className="text-indigo-600">justify-content</span>: space-between;
+              <div className="pl-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-xs font-extrabold text-indigo-700 font-mono uppercase tracking-wider mb-2">
+                      1D Flexbox (Content-Driven Layouts)
+                    </h4>
+                    <p className="text-xs text-slate-650 leading-relaxed mb-4">
+                      Best for **one-dimensional** alignments (either a single row OR a single column). Ideal for distributing dynamic items based strictly on their internal content size (e.g., headers, nav rails, tag lists).
+                    </p>
+                  </div>
+                  <div className="bg-slate-900 text-slate-200 p-3 rounded-lg border border-slate-800 text-[11px] font-mono">
+                    <span className="text-indigo-400">display</span>: flex;<br />
+                    <span className="text-indigo-400">justify-content</span>: space-between;
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                  <h4 className="text-xs font-extrabold text-emerald-700 font-mono uppercase tracking-wider mb-2">
-                    2D CSS Grid (Layout-Driven)
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-3">
-                    Best for **two-dimensional** matrix structures (rows AND columns together). Perfect for full dashboard templates.
-                  </p>
-                  <div className="bg-white p-2.5 rounded border text-[11px] font-mono text-slate-700">
-                    <span className="text-indigo-600">display</span>: grid;<br />
-                    <span className="text-indigo-600">grid-template-columns</span>: repeat(4, 1fr);
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-xs font-extrabold text-emerald-700 font-mono uppercase tracking-wider mb-2">
+                      2D CSS Grid (Container-Driven Layouts)
+                    </h4>
+                    <p className="text-xs text-slate-650 leading-relaxed mb-4">
+                      Best for **two-dimensional** matrix templates (rows AND columns matching up together). Perfect for full dashboard grid arrays, bento style layout profiles, and complex card grids.
+                    </p>
+                  </div>
+                  <div className="bg-slate-900 text-slate-200 p-3 rounded-lg border border-slate-800 text-[11px] font-mono">
+                    <span className="text-indigo-400">display</span>: grid;<br />
+                    <span className="text-indigo-400">grid-template-columns</span>: repeat(4, 1fr);
                   </div>
                 </div>
               </div>
