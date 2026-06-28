@@ -1,12 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Globe, Target, Columns4, Smartphone, Layout, 
-  Play, RotateCcw, Check, Sparkles, AlertCircle, HelpCircle, Eye, RefreshCw
+  Play, RotateCcw, Check, Sparkles, AlertCircle, HelpCircle, Eye, RefreshCw, CheckCircle2
 } from "lucide-react";
 import { CURRICULUM_SECTIONS } from "../data/curriculum";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function SectionViewer() {
   const [selectedSection, setSelectedSection] = useState("infrastructure");
+
+  // Track completed sections synchronized with the CurriculumTracker
+  const [completedList, setCompletedList] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem("fundamentals_completed_sections");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Keep state synced across tabs
+  useEffect(() => {
+    const handleSync = () => {
+      try {
+        const saved = localStorage.getItem("fundamentals_completed_sections");
+        setCompletedList(saved ? JSON.parse(saved) : []);
+      } catch {}
+    };
+    window.addEventListener("curriculum_completed_updated", handleSync);
+    return () => window.removeEventListener("curriculum_completed_updated", handleSync);
+  }, []);
+
+  const toggleCompleted = (id: string) => {
+    const isCompleted = completedList.includes(id);
+    const nextList = isCompleted 
+      ? completedList.filter(item => item !== id)
+      : [...completedList, id];
+    
+    setCompletedList(nextList);
+    localStorage.setItem("fundamentals_completed_sections", JSON.stringify(nextList));
+    // Trigger update event to keep tracker in sync
+    window.dispatchEvent(new Event("curriculum_completed_updated"));
+  };
 
   // Step state for DNS Lookup
   const [dnsStep, setDnsStep] = useState(0);
@@ -82,6 +117,12 @@ export default function SectionViewer() {
                         <span className="text-[10px] font-semibold text-slate-400 font-mono">
                           0{section.number}
                         </span>
+                        {completedList.includes(section.id) && (
+                          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-650 bg-emerald-50 px-1.5 py-0.5 rounded font-mono uppercase tracking-wide">
+                            <Check className="w-2.5 h-2.5 text-emerald-600" />
+                            Done
+                          </span>
+                        )}
                       </div>
                       <h3 className="text-xs sm:text-sm font-semibold truncate mt-0.5">{section.shortTitle}</h3>
                       <p className="text-[10px] text-slate-405 line-clamp-1 mt-0.5 font-sans hidden lg:block">{section.description}</p>
@@ -110,7 +151,16 @@ export default function SectionViewer() {
 
       {/* Main Study/Visual Panel */}
       <div className="lg:col-span-8 space-y-6" id="section-detail-panel">
-        {selectedSection === "infrastructure" && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedSection}
+            initial={{ opacity: 0, y: 12, scale: 0.99 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.99 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
+            {selectedSection === "infrastructure" && (
           <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 space-y-8 shadow-xs" id="sec-panel-infrastructure">
             <div>
               <span className="text-xs font-bold uppercase font-mono text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
@@ -382,6 +432,32 @@ export default function SectionViewer() {
                     </div>
                   </div>
                 </div>
+
+                {/* Academic Deep-Dive Section */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                    Deep-Dive Specification: Security & Accessibility Auditing
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    To build production-grade web systems, infrastructure and accessibility must adhere to strict international standards:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-700">
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">Network Sec: DNSSEC & Poisoning prevention</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        Standard DNS is vulnerable to spoofing/cache poisoning. <strong>DNSSEC</strong> (Domain Name System Security Extensions) resolves this by signing DNS queries with cryptographic keys, guaranteeing that the IP addresses returned from authoritative servers haven't been altered on the route.
+                      </p>
+                    </div>
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">WCAG 2.1 AAA Contrast Guidelines</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        To comply with strict <strong>WCAG 2.1 AAA</strong> level standards, normal text (under 18pt) requires a visual contrast ratio of at least <strong>7:1</strong> against its background. For larger display headings (above 18pt), a minimum ratio of <strong>4.5:1</strong> is required.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -540,6 +616,32 @@ export default function SectionViewer() {
                     </div>
                   </div>
                 </div>
+
+                {/* Academic Deep-Dive Section */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                    Deep-Dive Specification: Modern CSS Selectors & Nesting Mechanics
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    CSS specification has evolved to include powerful parent relational targeting and native compiler-free scoping:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-700">
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">The Relational Parent Selector: `:has()`</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        The legendary <strong>`:has()`</strong> pseudo-class allows styling a parent element based on its children or sibling states. For example, <code className="bg-slate-100 font-mono px-1 text-slate-800">card:has(img)</code> targets only cards containing an image, effectively giving CSS a &quot;parent selector&quot; capability.
+                      </p>
+                    </div>
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">Zero-Specificity Grouping: `:where()` vs `:is()`</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        Both allow grouping selectors cleanly, but <strong>`:where()`</strong> maintains exactly <strong>0-0-0 specificity</strong> regardless of its arguments (perfect for default/reset styles). Meanwhile, <strong>`:is()`</strong> takes the specificity score of its most specific argument.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -731,6 +833,32 @@ export default function SectionViewer() {
                       : "Inline-block aligns perfectly inline with neighbors, yet cleanly respects the width and height sliders you set!"}
                   </div>
                 </div>
+
+                {/* Academic Deep-Dive Section */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                    Deep-Dive Specification: Accessibility Tree & Tabular Semantics
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Under the hood, HTML markup directly influences accessibility APIs that screen readers rely on to assist users:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-700">
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">Landmark Roles & Accessibility Tree</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        The browser converts the DOM into an <strong>Accessibility Tree</strong>. Semantic tags such as <code className="bg-slate-100 font-mono px-1 text-slate-800">&lt;main&gt;</code>, <code className="bg-slate-100 font-mono px-1 text-slate-800">&lt;nav&gt;</code>, and <code className="bg-slate-100 font-mono px-1 text-slate-800">&lt;aside&gt;</code> define critical landmarks. If you replace them with generic divs, you destroy this structural index, locking out keyboard and screen reader power users.
+                      </p>
+                    </div>
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">WCAG Table Auditing: The `scope` Attribute</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        Complex multi-row tables require strict headers. Using <code className="bg-slate-100 font-mono px-1 text-slate-800">scope=&quot;col&quot;</code> and <code className="bg-slate-100 font-mono px-1 text-slate-800">scope=&quot;row&quot;</code> explicitly announces relationship mappings between cells. Without explicit scoping, screen reader users are forced to memorize dense columns, which leads to cognitive fatigue.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -881,6 +1009,32 @@ export default function SectionViewer() {
                     </div>
                   </div>
                 </div>
+
+                {/* Academic Deep-Dive Section */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                    Deep-Dive Specification: Container Queries & Typographic Measure
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Responsive design is moving beyond simple viewport breakpoints to highly context-aware component models:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-700">
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">CSS Container Queries (`@container`)</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        Unlike media queries that only listen to the viewport, <strong>Container Queries</strong> query the size of a specific parent container. By declaring <code className="bg-slate-100 font-mono px-1 text-slate-800">container-type: inline-size</code>, a child element can query its direct parent width using <code className="bg-slate-100 font-mono px-1 text-slate-800">@container (max-width: 400px)</code>, making components modular across sidebars, grid cells, or main areas.
+                      </p>
+                    </div>
+                    <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                      <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">Readable Typographic Measure (`ch` unit)</span>
+                      <p className="leading-relaxed text-slate-600 text-[11px]">
+                        The <strong>`ch`</strong> unit represents the horizontal width of the character &quot;0&quot; in the element's active font. Web designers use it to set optimal line lengths (known as &quot;measure&quot;). Setting <code className="bg-slate-100 font-mono px-1 text-slate-800">max-width: 65ch</code> guarantees readable paragraphs (between 45 to 75 characters per line) on any screen.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -1068,8 +1222,60 @@ export default function SectionViewer() {
                 </div>
               </div>
             </div>
+
+            {/* Academic Deep-Dive Section */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3.5 mt-6">
+              <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                Deep-Dive Specification: CSS Grid Auto-Scaling & Subgrid Inheritances
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Advanced layout architectures leverage modern CSS layout calculation properties to synchronize complex element grids:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-700">
+                <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                  <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">Auto-fit vs Auto-fill Columns</span>
+                  <p className="leading-relaxed text-slate-600 text-[11px]">
+                    Using <code className="bg-slate-100 font-mono px-1 text-slate-800">repeat(auto-fit, minmax(220px, 1fr))</code> creates an auto-wrapping responsive grid. <strong>`auto-fit`</strong> will expand active columns to stretch and fill all available remaining space. In contrast, <strong>`auto-fill`</strong> retains empty column slots, keeping card widths at their exact specified minimum boundaries.
+                  </p>
+                </div>
+                <div className="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2">
+                  <span className="font-bold text-indigo-650 font-mono text-[10px] block uppercase">CSS Subgrid Alignments</span>
+                  <p className="leading-relaxed text-slate-600 text-[11px]">
+                    The <strong>`subgrid`</strong> value (e.g. <code className="bg-slate-100 font-mono px-1 text-slate-800">grid-template-rows: subgrid</code>) allows nested child components to align perfectly to the track lines of the parent grid. This prevents misaligned headers and footers across adjacent columns of varying description text lengths.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
+
+        {/* Global Topic Completion Footer Action */}
+        <div className="mt-8 pt-6 border-t border-slate-200/65 flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-3xs" id="chapter-completion-action-bar">
+          <div className="space-y-1 text-center sm:text-left">
+            <h4 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider flex items-center justify-center sm:justify-start gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-slate-500" />
+              Interactive Chapter Syllabus Progress
+            </h4>
+            <p className="text-xs text-slate-500">
+              Finished reading and experimenting? Mark this topic as completed to track your mastery!
+            </p>
+          </div>
+          <button
+            onClick={() => toggleCompleted(selectedSection)}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all duration-300 border ${
+              completedList.includes(selectedSection)
+                ? "bg-slate-950 text-white border-slate-950 shadow-xs"
+                : "bg-white hover:bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300"
+            }`}
+          >
+            <Check className={`w-4 h-4 ${completedList.includes(selectedSection) ? "text-amber-400" : "text-slate-400"}`} />
+            <span>{completedList.includes(selectedSection) ? "Topic Completed ✔" : "Mark Chapter as Completed"}</span>
+          </button>
+        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Copy, Check, Sparkles, Sliders, LayoutGrid, Rows } from "lucide-react";
+import { Copy, Check, Sparkles, Sliders, LayoutGrid, Rows, Layers, Eye } from "lucide-react";
 
 export default function LayoutSandbox() {
   const [activeEngine, setActiveEngine] = useState<"flex" | "grid">("flex");
+  const [visualMode, setVisualMode] = useState<boolean>(true);
 
   // Flexbox parameters
   const [flexDirection, setFlexDirection] = useState<"row" | "row-reverse" | "column" | "column-reverse">("row");
@@ -279,17 +280,55 @@ export default function LayoutSandbox() {
         {/* Live Visual Canvas Area */}
         <div className="lg:col-span-8 bg-slate-100 border border-slate-200 rounded-xl p-5 flex flex-col justify-between shadow-inner min-h-[350px]" id="lab-canvas">
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
               <span className="text-xs font-bold font-mono text-slate-500 uppercase tracking-widest">
                 Visual Canvas ({activeEngine.toUpperCase()})
               </span>
-              <span className="text-[10px] bg-white border border-slate-200 px-2 py-0.5 rounded-full font-mono text-slate-600">
-                Resizes fluidly
-              </span>
+              <div className="flex items-center gap-2.5">
+                {/* Visual Box Model Outlines Switch */}
+                <button
+                  onClick={() => setVisualMode(!visualMode)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition-all border ${
+                    visualMode 
+                      ? "bg-amber-500 border-amber-600 text-slate-950 shadow-xs" 
+                      : "bg-white hover:bg-slate-55 text-slate-700 border-slate-200"
+                  }`}
+                  id="toggle-visual-box-model"
+                  title="Draw colored boundaries representing margins, borders, and padding dimensions"
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Visual Box Mode: {visualMode ? "ON" : "OFF"}</span>
+                </button>
+                <span className="text-[10px] bg-white border border-slate-200 px-2 py-1 rounded-lg font-mono text-slate-600 hidden sm:inline">
+                  Resizes fluidly
+                </span>
+              </div>
             </div>
 
+            {/* Box Model Interactive Legend */}
+            {visualMode && (
+              <div className="mb-4 p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-medium" id="box-model-legend">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-orange-400 rounded-xs border border-orange-500 shrink-0"></span>
+                  <span className="text-slate-700 font-mono">Margin (Orange Outlines)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-blue-500 rounded-xs shrink-0"></span>
+                  <span className="text-slate-700 font-mono">Border (Solid Blue Line)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-emerald-100 border border-emerald-400 border-dashed rounded-xs shrink-0"></span>
+                  <span className="text-slate-700 font-mono">Padding (Green Spacing)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 bg-red-500 rounded-xs shrink-0"></span>
+                  <span className="text-slate-700 font-mono">Element (Red Border)</span>
+                </div>
+              </div>
+            )}
+
             {/* Simulated Frame */}
-            <div className="bg-white rounded-lg p-5 border border-slate-200 shadow-xs min-h-[220px] flex flex-col justify-center">
+            <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-xs min-h-[220px] flex flex-col justify-center">
               {activeEngine === "flex" ? (
                 /* Flexbox Simulated Element Group */
                 <div
@@ -301,26 +340,43 @@ export default function LayoutSandbox() {
                     gap: flexGap,
                     width: "100%",
                     minHeight: "150px",
-                    border: "2px dashed #cbd5e1",
+                    border: visualMode ? "3px solid #3b82f6" : "2px dashed #cbd5e1",
+                    outline: visualMode ? "4px solid rgba(249, 115, 22, 0.45)" : "none",
+                    outlineOffset: visualMode ? "4px" : "0",
                     borderRadius: "8px",
-                    padding: "8px"
+                    padding: visualMode ? "24px" : "8px",
+                    backgroundColor: visualMode ? "rgba(34, 197, 94, 0.08)" : "transparent",
+                    position: "relative"
                   }}
                   className="transition-all duration-300"
                   id="canvas-flexbox-container"
                 >
+                  {visualMode && (
+                    <span className="absolute -top-3.5 left-2 bg-blue-600 text-white font-mono text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider z-20">
+                      Parent (.container)
+                    </span>
+                  )}
                   {Array.from({ length: flexItemCount }).map((_, idx) => (
                     <div
                       key={idx}
-                      className="bg-indigo-600 text-white p-3 rounded-md shadow-sm transition-all duration-300 text-left min-w-[70px] shrink-0"
+                      className="bg-indigo-600 text-white p-3 rounded-md shadow-sm transition-all duration-300 text-left min-w-[70px] shrink-0 relative"
                       style={{
                         flex: 1,
                         minHeight: "60px",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        border: visualMode ? "2px solid #ef4444" : "none",
+                        outline: visualMode ? "2px solid rgba(249, 115, 22, 0.3)" : "none",
+                        outlineOffset: "2px"
                       }}
                     >
-                      <h4 className="text-[10px] font-semibold text-indigo-200 uppercase font-mono">Stat Box {idx + 1}</h4>
+                      {visualMode && (
+                        <span className="absolute top-1 left-1 font-mono text-[8px] bg-indigo-950 text-indigo-300 px-1 rounded font-bold">
+                          Child {idx + 1}
+                        </span>
+                      )}
+                      <h4 className="text-[10px] font-semibold text-indigo-200 uppercase font-mono mt-1">Stat Box {idx + 1}</h4>
                       <p className="text-xs font-bold mt-0.5 leading-none">{(idx + 1) * 125}</p>
                     </div>
                   ))}
@@ -334,19 +390,38 @@ export default function LayoutSandbox() {
                     gap: gridGap,
                     width: "100%",
                     minHeight: "150px",
-                    border: "2px dashed #cbd5e1",
+                    border: visualMode ? "3px solid #3b82f6" : "2px dashed #cbd5e1",
+                    outline: visualMode ? "4px solid rgba(249, 115, 22, 0.45)" : "none",
+                    outlineOffset: visualMode ? "4px" : "0",
                     borderRadius: "8px",
-                    padding: "8px"
+                    padding: visualMode ? "24px" : "8px",
+                    backgroundColor: visualMode ? "rgba(34, 197, 94, 0.08)" : "transparent",
+                    position: "relative"
                   }}
                   className="transition-all duration-300"
                   id="canvas-grid-container"
                 >
+                  {visualMode && (
+                    <span className="absolute -top-3.5 left-2 bg-blue-600 text-white font-mono text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider z-20">
+                      Parent (.grid-container)
+                    </span>
+                  )}
                   {Array.from({ length: gridItemCount }).map((_, idx) => (
                     <div
                       key={idx}
-                      className="bg-emerald-600 text-white p-3 rounded-md shadow-sm transition-all duration-300 text-left min-h-[60px] flex flex-col justify-center"
+                      className="bg-emerald-600 text-white p-3 rounded-md shadow-sm transition-all duration-300 text-left min-h-[60px] flex flex-col justify-center relative"
+                      style={{
+                        border: visualMode ? "2px solid #ef4444" : "none",
+                        outline: visualMode ? "2px solid rgba(249, 115, 22, 0.3)" : "none",
+                        outlineOffset: "2px"
+                      }}
                     >
-                      <h4 className="text-[10px] font-semibold text-emerald-200 uppercase font-mono">Cell {idx + 1}</h4>
+                      {visualMode && (
+                        <span className="absolute top-1 left-1 font-mono text-[8px] bg-emerald-950 text-emerald-300 px-1 rounded font-bold">
+                          Child {idx + 1}
+                        </span>
+                      )}
+                      <h4 className="text-[10px] font-semibold text-emerald-200 uppercase font-mono mt-1">Cell {idx + 1}</h4>
                       <p className="text-xs font-bold mt-0.5 leading-none font-mono">GRID_{idx + 1}</p>
                     </div>
                   ))}

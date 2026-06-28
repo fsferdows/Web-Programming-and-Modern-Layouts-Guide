@@ -4,7 +4,9 @@ import SectionViewer from "./components/SectionViewer";
 import CodePlayground from "./components/CodePlayground";
 import LayoutSandbox from "./components/LayoutSandbox";
 import QuizEngine from "./components/QuizEngine";
+import CurriculumTracker from "./components/CurriculumTracker";
 import { BookOpen, Code2, Boxes, GraduationCap, Sparkles, CheckCircle2, Eye, Wifi, WifiOff } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>(() => {
@@ -15,6 +17,11 @@ export default function App() {
   });
   const [isOffline, setIsOffline] = useState<boolean>(() => {
     return typeof navigator !== "undefined" ? !navigator.onLine : false;
+  });
+
+  // User-controlled Theme Preference (system/light/dark)
+  const [theme, setTheme] = useState<"light" | "dark" | "system">(() => {
+    return (localStorage.getItem("fundamentals_theme") as "light" | "dark" | "system") || "system";
   });
 
   // Offline status listeners
@@ -30,6 +37,35 @@ export default function App() {
       window.removeEventListener("offline", handleOffline);
     };
   }, []);
+
+  // Sync Theme changes with browser/HTML element
+  useEffect(() => {
+    const root = window.document.documentElement;
+    const updateTheme = () => {
+      const isDark =
+        theme === "dark" ||
+        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (isDark) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    };
+
+    updateTheme();
+
+    if (theme === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const listener = () => updateTheme();
+      mediaQuery.addEventListener("change", listener);
+      return () => mediaQuery.removeEventListener("change", listener);
+    }
+  }, [theme]);
+
+  const handleSetTheme = (nextTheme: "light" | "dark" | "system") => {
+    setTheme(nextTheme);
+    localStorage.setItem("fundamentals_theme", nextTheme);
+  };
 
   const handleSetActiveTab = (tab: string) => {
     setActiveTab(tab);
@@ -111,6 +147,8 @@ export default function App() {
         isZenMode={isZenMode}
         toggleZenMode={handleToggleZenMode}
         isOffline={isOffline}
+        theme={theme}
+        setTheme={handleSetTheme}
       />
 
       {/* Main Container */}
@@ -118,77 +156,94 @@ export default function App() {
         
         {/* Welcome Stat banner (Only shows on Study tab for layout breathing room) */}
         {activeTab === "study" && (
-          <div className="bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 md:p-10 lg:p-12 mb-8 shadow-sm relative overflow-hidden" id="welcome-stat-banner">
-            <div className="absolute -top-10 -right-10 text-slate-100 font-mono text-[120px] sm:text-[180px] md:text-[240px] font-black select-none pointer-events-none leading-none opacity-20">
-              5
-            </div>
-            
-            <div className="relative z-10 max-w-3xl space-y-3">
-              <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-xs font-mono uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                <span>Modern Web Masterclass Q&A Companion</span>
+          <>
+            <div className="bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 md:p-10 lg:p-12 mb-8 shadow-sm relative overflow-hidden" id="welcome-stat-banner">
+              <div className="absolute -top-10 -right-10 text-slate-100 font-mono text-[120px] sm:text-[180px] md:text-[240px] font-black select-none pointer-events-none leading-none opacity-20">
+                5
               </div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight">
-                Master the Core Mechanics of Web Programming
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal max-w-2xl">
-                Explore the five structural pillars of modern layout architecture, web request routing, and inclusive accessible design. Interact with real-time browser sandbox frames to experiment with CSS targeting, flex box properties, and responsive matrices.
-              </p>
-            </div>
-
-            {/* Quick Metrics Bar with auto-fitting grid adjusting based on screen width */}
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200" id="welcome-metrics">
               
-              <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
-                  <BookOpen className="w-5 h-5" />
+              <div className="relative z-10 max-w-3xl space-y-3">
+                <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-xs font-mono uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                  <span>Modern Web Masterclass Q&A Companion</span>
                 </div>
-                <div>
-                  <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Core</div>
-                  <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Topic Sections</div>
-                </div>
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                  Master the Core Mechanics of Web Programming
+                </h1>
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal max-w-2xl">
+                  Explore the five structural pillars of modern layout architecture, web request routing, and inclusive accessible design. Interact with real-time browser sandbox frames to experiment with CSS targeting, flex box properties, and responsive matrices.
+                </p>
               </div>
 
-              <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
-                  <Code2 className="w-5 h-5" />
+              {/* Quick Metrics Bar with auto-fitting grid adjusting based on screen width */}
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200" id="welcome-metrics">
+                
+                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Core</div>
+                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Topic Sections</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Presets</div>
-                  <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Live Playgrounds</div>
-                </div>
-              </div>
 
-              <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
-                  <Boxes className="w-5 h-5" />
+                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                    <Code2 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">5 Presets</div>
+                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Live Playgrounds</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">2 Interactive</div>
-                  <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Visual Labs</div>
-                </div>
-              </div>
 
-              <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
-                <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
-                  <GraduationCap className="w-5 h-5" />
+                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                    <Boxes className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">2 Interactive</div>
+                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Visual Labs</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">12 Q&As</div>
-                  <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Practice Quizzes</div>
-                </div>
-              </div>
 
+                <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
+                  <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-base sm:text-lg font-extrabold text-slate-950 leading-none">12 Q&As</div>
+                    <div className="text-[11px] text-slate-700 font-semibold font-mono mt-1.5 uppercase tracking-wider">Practice Quizzes</div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
+
+            {/* Curriculum Progress Tracker banner */}
+            <div className="mb-8" id="study-curriculum-tracker-container">
+              <CurriculumTracker />
+            </div>
+          </>
         )}
 
-        {/* Tab content routing */}
-        <div id="active-tab-panel" className="transition-all duration-300">
-          {activeTab === "study" && <SectionViewer />}
-          {activeTab === "playground" && <CodePlayground />}
-          {activeTab === "lab" && <LayoutSandbox />}
-          {activeTab === "quiz" && <QuizEngine />}
+        {/* Tab content routing with premium Framer Motion transitions */}
+        <div id="active-tab-panel">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12, scale: 0.99 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.99 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {activeTab === "study" && <SectionViewer />}
+              {activeTab === "playground" && <CodePlayground />}
+              {activeTab === "lab" && <LayoutSandbox />}
+              {activeTab === "quiz" && <QuizEngine />}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
 
