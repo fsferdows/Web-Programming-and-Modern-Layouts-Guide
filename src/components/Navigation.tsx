@@ -69,7 +69,7 @@ export default function Navigation({ activeTab, setActiveTab, isZenMode, toggleZ
           </div>
 
           <div className="flex flex-wrap items-center gap-2" id="nav-tabs-container">
-            <nav className="flex flex-wrap gap-1.5" id="nav-tabs">
+            <nav className="bg-slate-100/90 p-1 rounded-xl flex flex-wrap gap-1 border border-slate-200/60" id="nav-tabs">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -78,13 +78,14 @@ export default function Navigation({ activeTab, setActiveTab, isZenMode, toggleZ
                     key={item.id}
                     id={`tab-btn-${item.id}`}
                     onClick={() => setActiveTab(item.id)}
-                    className={`flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
+                    title={item.desc}
+                    className={`flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer select-none ${
                       isActive
-                        ? "bg-slate-900 text-white shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ? "bg-white text-slate-950 shadow-xs border border-slate-200/50"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? "text-indigo-600" : "text-slate-500"}`} />
                     <span className="hidden sm:inline">{item.label}</span>
                     <span className="sm:hidden">{item.label.split(" ").pop()}</span>
                   </button>
@@ -98,7 +99,7 @@ export default function Navigation({ activeTab, setActiveTab, isZenMode, toggleZ
             <button
               onClick={toggleZenMode}
               title="Enter Zen Study Mode (Hides Header)"
-              className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 cursor-pointer transition-all hover:text-slate-950 shadow-3xs"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 cursor-pointer transition-all hover:text-slate-950 shadow-3xs"
             >
               <EyeOff className="w-3.5 h-3.5 text-slate-500" />
               <span className="hidden lg:inline">Zen Mode</span>
