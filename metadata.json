@@ -1,0 +1,6 @@
+{
+  "name": "Web Programming and Modern Layouts Guide",
+  "description": "An interactive study guide, code visualizer, and practice companion for mastering web infrastructure, CSS selectors, HTML semantics, responsive design, and CSS layouts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
