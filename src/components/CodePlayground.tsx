@@ -300,23 +300,23 @@ export default function CodePlayground() {
           </div>
 
           {/* Quick interactive snippet injection shortcuts */}
-          <div className="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex flex-wrap items-center gap-1.5 text-xs text-slate-500">
-            <span className="font-semibold text-slate-700">Quick Inject:</span>
+          <div className="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+            <span className="font-semibold text-slate-750">Quick Inject:</span>
             <button
               onClick={() => applyQuickStyle("background")}
-              className="px-2 py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-[11px] text-slate-700 cursor-pointer transition-all"
+              className="px-3.5 py-2 sm:px-2 sm:py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-xs sm:text-[11px] text-slate-700 cursor-pointer transition-all min-h-[36px] sm:min-h-0 flex items-center justify-center select-none"
             >
               🎨 Add Light-Blue BG
             </button>
             <button
               onClick={() => applyQuickStyle("border")}
-              className="px-2 py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-[11px] text-slate-700 cursor-pointer transition-all"
+              className="px-3.5 py-2 sm:px-2 sm:py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-xs sm:text-[11px] text-slate-700 cursor-pointer transition-all min-h-[36px] sm:min-h-0 flex items-center justify-center select-none"
             >
               🛑 Add Dashed Red Borders
             </button>
             <button
               onClick={() => applyQuickStyle("padding")}
-              className="px-2 py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-[11px] text-slate-700 cursor-pointer transition-all"
+              className="px-3.5 py-2 sm:px-2 sm:py-1 bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-100 rounded text-xs sm:text-[11px] text-slate-700 cursor-pointer transition-all min-h-[36px] sm:min-h-0 flex items-center justify-center select-none"
             >
               📏 Expand Padding & Gap
             </button>

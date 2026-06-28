@@ -87,9 +87,41 @@ export default function SectionViewer() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 py-4" id="section-viewer-root">
-      {/* Sidebar Navigation */}
-      <div className="lg:col-span-4 space-y-4" id="section-sidebar">
+    <div className="flex flex-col gap-6 py-4" id="section-viewer-container">
+      {/* Mobile Chapter Navigation: beautiful horizontal swipeable list */}
+      <div className="block lg:hidden w-full bg-slate-50 dark:bg-slate-900/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-850" id="mobile-chapter-selector">
+        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 font-mono uppercase tracking-wider block mb-2.5">
+          Select Study Topic:
+        </span>
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
+          {CURRICULUM_SECTIONS.map((section) => {
+            const isSelected = selectedSection === section.id;
+            return (
+              <button
+                key={section.id}
+                onClick={() => setSelectedSection(section.id)}
+                className={`flex-none snap-center flex items-center space-x-2 px-3.5 py-2.5 rounded-xl border transition-all duration-200 text-xs font-semibold cursor-pointer select-none whitespace-nowrap ${
+                  isSelected
+                    ? "bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white shadow-xs font-bold"
+                    : "bg-white dark:bg-slate-850 border-slate-200 dark:border-slate-800 text-slate-655 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
+              >
+                <span className={`p-1 rounded ${isSelected ? "bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900" : "bg-slate-100 dark:bg-slate-800 text-slate-500"}`}>
+                  {getSectionIcon(section.icon)}
+                </span>
+                <span>{section.shortTitle}</span>
+                {completedList.includes(section.id) && (
+                  <span className="inline-flex w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white dark:border-slate-900" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6" id="section-viewer-root">
+        {/* Sidebar Navigation (Desktop only) */}
+        <div className="hidden lg:block lg:col-span-4 space-y-4" id="section-sidebar">
         <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
           <h2 className="text-xs font-semibold text-slate-500 uppercase font-mono tracking-wider mb-2.5">
             Core Curriculum Sections
@@ -1277,6 +1309,7 @@ export default function SectionViewer() {
           </motion.div>
         </AnimatePresence>
       </div>
+    </div>
     </div>
   );
 }

@@ -71,27 +71,27 @@ export default function LayoutSandbox() {
         </p>
 
         {/* Engine switcher tabs */}
-        <div className="flex gap-2 mt-5" id="engine-tabs">
+        <div className="flex flex-col sm:flex-row gap-2 mt-5" id="engine-tabs">
           <button
             onClick={() => setActiveEngine("flex")}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
+            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
               activeEngine === "flex"
                 ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
-                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
             }`}
           >
-            <Rows className="w-4 h-4" />
+            <Rows className="w-4 h-4 shrink-0" />
             <span>1D Flexbox Alignment</span>
           </button>
           <button
             onClick={() => setActiveEngine("grid")}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
+            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold font-mono uppercase cursor-pointer border transition-all ${
               activeEngine === "grid"
                 ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
             }`}
           >
-            <LayoutGrid className="w-4 h-4" />
+            <LayoutGrid className="w-4 h-4 shrink-0" />
             <span>2D CSS Grid Matrix</span>
           </button>
         </div>
@@ -180,20 +180,38 @@ export default function LayoutSandbox() {
                   </div>
                 </div>
 
-                {/* item count */}
+                 {/* item count */}
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-xs font-bold text-slate-700 font-mono">item count</label>
-                    <span className="text-xs font-bold text-slate-500 font-mono">{flexItemCount} boxes</span>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block font-mono">item count</label>
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 font-mono">{flexItemCount} boxes</span>
                   </div>
-                  <input
-                    type="range"
-                    min="2"
-                    max="6"
-                    value={flexItemCount}
-                    onChange={(e) => setFlexItemCount(Number(e.target.value))}
-                    className="w-full accent-slate-900 cursor-pointer"
-                  />
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setFlexItemCount(Math.max(2, flexItemCount - 1))}
+                      disabled={flexItemCount <= 2}
+                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 cursor-pointer text-sm font-bold shrink-0 select-none"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="2"
+                      max="6"
+                      value={flexItemCount}
+                      onChange={(e) => setFlexItemCount(Number(e.target.value))}
+                      className="flex-1 accent-slate-900 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFlexItemCount(Math.min(6, flexItemCount + 1))}
+                      disabled={flexItemCount >= 6}
+                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 cursor-pointer text-sm font-bold shrink-0 select-none"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -201,7 +219,7 @@ export default function LayoutSandbox() {
               <div className="space-y-4" id="grid-controls-list">
                 {/* grid-template-columns */}
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1.5 font-mono">grid-template-columns</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5 font-mono">grid-template-columns</label>
                   <div className="flex flex-col gap-1">
                     {[
                       { val: "repeat(4, 1fr)", label: "4 Equal Columns" },
@@ -213,7 +231,7 @@ export default function LayoutSandbox() {
                         key={col.val}
                         onClick={() => setGridCols(col.val as any)}
                         className={`text-[10px] font-mono p-2 rounded-md border text-left px-3 cursor-pointer ${
-                          gridCols === col.val ? "bg-slate-900 text-white border-slate-900 font-bold" : "bg-slate-50 text-slate-600 border-slate-100 hover:bg-slate-100"
+                          gridCols === col.val ? "bg-slate-900 text-white border-slate-900 font-bold" : "bg-slate-50 text-slate-600 border-slate-100 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700"
                         }`}
                       >
                         {col.label} <code className="text-[9px] block text-slate-400 font-normal">{col.val}</code>
@@ -224,14 +242,14 @@ export default function LayoutSandbox() {
 
                 {/* gap */}
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1.5 font-mono">grid gap size</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1.5 font-mono">grid gap size</label>
                   <div className="grid grid-cols-3 gap-1">
                     {["4px", "12px", "24px"].map((gap) => (
                       <button
                         key={gap}
                         onClick={() => setGridGap(gap as any)}
                         className={`text-[10px] font-mono p-1.5 rounded-md border text-center cursor-pointer ${
-                          gridGap === gap ? "bg-slate-900 text-white border-slate-900 font-bold" : "bg-slate-50 text-slate-600 border-slate-100 hover:bg-slate-100"
+                          gridGap === gap ? "bg-slate-900 text-white border-slate-900 font-bold" : "bg-slate-50 text-slate-600 border-slate-100 hover:bg-slate-100 dark:bg-slate-800 dark:border-slate-700"
                         }`}
                       >
                         {gap}
@@ -243,17 +261,35 @@ export default function LayoutSandbox() {
                 {/* Grid Item Count */}
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-xs font-bold text-slate-700 font-mono">item count</label>
-                    <span className="text-xs font-bold text-slate-500 font-mono">{gridItemCount} boxes</span>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block font-mono">item count</label>
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 font-mono">{gridItemCount} boxes</span>
                   </div>
-                  <input
-                    type="range"
-                    min="2"
-                    max="8"
-                    value={gridItemCount}
-                    onChange={(e) => setGridItemCount(Number(e.target.value))}
-                    className="w-full accent-slate-900 cursor-pointer"
-                  />
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setGridItemCount(Math.max(2, gridItemCount - 1))}
+                      disabled={gridItemCount <= 2}
+                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 cursor-pointer text-sm font-bold shrink-0 select-none"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="2"
+                      max="8"
+                      value={gridItemCount}
+                      onChange={(e) => setGridItemCount(Number(e.target.value))}
+                      className="flex-1 accent-slate-900 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setGridItemCount(Math.min(8, gridItemCount + 1))}
+                      disabled={gridItemCount >= 8}
+                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 cursor-pointer text-sm font-bold shrink-0 select-none"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -328,7 +364,7 @@ export default function LayoutSandbox() {
             )}
 
             {/* Simulated Frame */}
-            <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-xs min-h-[220px] flex flex-col justify-center">
+            <div className="bg-white rounded-lg p-3 sm:p-6 border border-slate-200 shadow-xs min-h-[220px] flex flex-col justify-center overflow-x-auto">
               {activeEngine === "flex" ? (
                 /* Flexbox Simulated Element Group */
                 <div
@@ -344,9 +380,10 @@ export default function LayoutSandbox() {
                     outline: visualMode ? "4px solid rgba(249, 115, 22, 0.45)" : "none",
                     outlineOffset: visualMode ? "4px" : "0",
                     borderRadius: "8px",
-                    padding: visualMode ? "24px" : "8px",
+                    padding: visualMode ? "16px" : "8px",
                     backgroundColor: visualMode ? "rgba(34, 197, 94, 0.08)" : "transparent",
-                    position: "relative"
+                    position: "relative",
+                    overflowX: "auto"
                   }}
                   className="transition-all duration-300"
                   id="canvas-flexbox-container"
@@ -394,9 +431,10 @@ export default function LayoutSandbox() {
                     outline: visualMode ? "4px solid rgba(249, 115, 22, 0.45)" : "none",
                     outlineOffset: visualMode ? "4px" : "0",
                     borderRadius: "8px",
-                    padding: visualMode ? "24px" : "8px",
+                    padding: visualMode ? "16px" : "8px",
                     backgroundColor: visualMode ? "rgba(34, 197, 94, 0.08)" : "transparent",
-                    position: "relative"
+                    position: "relative",
+                    overflowX: "auto"
                   }}
                   className="transition-all duration-300"
                   id="canvas-grid-container"

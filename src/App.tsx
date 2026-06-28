@@ -176,7 +176,7 @@ export default function App() {
               </div>
 
               {/* Quick Metrics Bar with auto-fitting grid adjusting based on screen width */}
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200" id="welcome-metrics">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 sm:gap-6 mt-8 pt-8 border-t border-slate-200" id="welcome-metrics">
                 
                 <div className="group flex items-center space-x-3.5 bg-white hover:bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:shadow-xs transition-all duration-300 ease-out hover:-translate-y-1">
                   <div className="p-3 rounded-xl bg-slate-100 text-slate-950 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300 shadow-2xs">

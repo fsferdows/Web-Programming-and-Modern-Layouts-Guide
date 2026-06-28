@@ -41,7 +41,7 @@ export default function Navigation({
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <h1 className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-slate-55 tracking-tight leading-none">
+                  <h1 className="text-base sm:text-lg font-extrabold text-slate-950 dark:text-slate-55 tracking-tight leading-none bg-[#fbfbfb]">
                     Web Academy
                   </h1>
                   <span className="inline-flex items-center text-[9px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold px-1.5 py-0.5 rounded-md font-mono uppercase tracking-wider">
@@ -78,8 +78,8 @@ export default function Navigation({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2" id="nav-tabs-container">
-            <nav className="bg-slate-100/90 dark:bg-slate-800/80 p-1 rounded-xl flex flex-wrap gap-1 border border-slate-200/60 dark:border-slate-750" id="nav-tabs">
+          <div className="flex flex-wrap items-center gap-2 max-w-full" id="nav-tabs-container">
+            <nav className="bg-slate-100/90 dark:bg-slate-800/80 p-1 rounded-xl flex items-center gap-1 overflow-x-auto scrollbar-none border border-slate-200/60 dark:border-slate-750 max-w-full" id="nav-tabs">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -89,7 +89,7 @@ export default function Navigation({
                     id={`tab-btn-${item.id}`}
                     onClick={() => setActiveTab(item.id)}
                     title={item.desc}
-                    className={`flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer select-none ${
+                    className={`flex items-center space-x-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer select-none shrink-0 whitespace-nowrap ${
                       isActive
                         ? "bg-white dark:bg-slate-900 text-slate-950 dark:text-white shadow-xs border border-slate-200/50 dark:border-slate-800"
                         : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-800/30"
